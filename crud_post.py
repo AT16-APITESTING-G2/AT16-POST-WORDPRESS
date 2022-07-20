@@ -16,7 +16,7 @@ import requests
 
 class CrudPost:
 
-    def create_post(self, url, token, title, content, page, status):
+    def create_post(self, url, token,title, content, page, status):
         payload = {'title': title,
                    'content': content,
                    'page': page,
@@ -50,5 +50,3 @@ class CrudPost:
         headers = {'Authorization': token}
         response = requests.request("POST", url, headers=headers, data=payload)
         return response
-
-
