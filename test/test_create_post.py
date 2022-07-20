@@ -10,7 +10,8 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-
+import http
+from http import HTTPStatus
 from unittest import TestCase
 from assertpy import assert_that
 from crud_post import CrudPost
@@ -28,4 +29,4 @@ class TestCreatePost(TestCase):
 
         crud_post = CrudPost()
         response = crud_post.create_post(url, token, title, content, page, status)
-        assert_that(response.status_code).is_equal_to(201)
+        assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
