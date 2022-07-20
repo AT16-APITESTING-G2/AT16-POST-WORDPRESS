@@ -3,7 +3,7 @@ import requests
 
 class CrudPost:
 
-    def create_post(self, url, token,title, content, page, status):
+    def create_post(self, url, token, title, content, page, status):
         payload = {'title': title,
                    'content': content,
                    'page': page,
@@ -20,7 +20,11 @@ class CrudPost:
     def delete_post(self):
         return
 
-    def update_post(self):
-        return
+    def update_post(self, url, token, title, content):
+        payload = {'title': title,
+                   'content': content}
+        headers = {'Authorization': token}
+        response = requests.request("POST", url, headers=headers, data=payload)
+        return response
 
 

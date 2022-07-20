@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from assertpy import assert_that
+from assertpy.assertpy import assert_that
 
 from crud_post import CrudPost
 
