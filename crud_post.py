@@ -38,7 +38,7 @@ class CrudPost:
             'Authorization': token
         }
 
-        response = requests.request("GET", new_url, headers=headers, data=payload, files=files)
+        response = requests.get(new_url, headers=headers, data=payload, files=files)
         return response
 
     def delete_post(self):
