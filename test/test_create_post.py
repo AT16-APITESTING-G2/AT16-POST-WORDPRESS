@@ -10,7 +10,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-import http
+
 from http import HTTPStatus
 from unittest import TestCase
 from assertpy import assert_that
