@@ -1,20 +1,31 @@
+#
+# @test_retrieve_post.py Copyright (c) 2022 Jalasoft
+# 2643 Av Melchor Perez de Olguin , Colquiri Sud, Cochabamba, Bolivia.
+# add direccion de jala la paz>
+# All rights reserved
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Confidential Information"). You shall not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft.
+#
+
 from unittest import TestCase
-
 from assertpy import assert_that
-
 from crud_post import CrudPost
+from decouple import config
 
 
 class TestCreatePost(TestCase):
     def test_create_post(self):
-        url = ""
-        token = ""
-        content = ""
-        page = ""
-        status = ""
-        title = ""
+        url = config('URL')
+        token = config('TOKEN')
+        content = config('CONTENT')
+        page = config('PAGE')
+        status = config('STATUS')
+        title = config('TITLE')
 
         crud_post = CrudPost()
-        crud_post.create_post(url, token, title, content, page, status)
-        assert_that()
-
+        response = crud_post.create_post(url, token, title, content, page, status)
+        assert_that(response.status_code).is_equal_to(201)
