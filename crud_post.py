@@ -17,6 +17,17 @@ class CrudPost:
 
         return response
 
+    def retrieve_post(self, url, token, id_post):
+        new_url = url + id_post
+        payload = {}
+        files = {}
+        headers = {
+            'Authorization': token
+        }
+
+        response = requests.request("GET", new_url, headers=headers, data=payload, files=files)
+        return response
+
     def delete_post(self):
         return
 
