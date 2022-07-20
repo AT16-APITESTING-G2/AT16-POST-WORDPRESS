@@ -28,7 +28,6 @@ class CrudPost:
         }
 
         response = requests.request("POST", url, headers=headers, data=payload)
-
         return response
 
     def delete_post(self, URL, token, id_post):
@@ -61,5 +60,4 @@ class CrudPost:
         headers = {'Authorization': token}
         response = requests.request("POST", url, headers=headers, data=payload)
         return response
-
 
