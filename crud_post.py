@@ -17,6 +17,7 @@ import requests
 class CrudPost:
 
     def create_post(self, url, token,title, content, page, status):
+
         payload = {'title': title,
                    'content': content,
                    'page': page,
@@ -27,7 +28,19 @@ class CrudPost:
         }
 
         response = requests.request("POST", url, headers=headers, data=payload)
+        return response
 
+    def delete_post(self, URL, token, id_post):
+        url = URL + id_post
+        payload = {}
+        files = {}
+
+        headers = {
+            'Authorization': token
+        }
+        response = requests.request("DELETE", url, headers=headers, data=payload, files=files)
+
+        print(response.text)
         return response
 
     def retrieve_post(self, url, token, id_post):
@@ -41,12 +54,10 @@ class CrudPost:
         response = requests.get(new_url, headers=headers, data=payload, files=files)
         return response
 
-    def delete_post(self):
-        return
-
     def update_post(self, url, token, title, content):
         payload = {'title': title,
                    'content': content}
         headers = {'Authorization': token}
         response = requests.request("POST", url, headers=headers, data=payload)
         return response
+        
