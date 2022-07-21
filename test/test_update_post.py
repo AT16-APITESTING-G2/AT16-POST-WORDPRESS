@@ -19,9 +19,9 @@ from decouple import config
 
 
 
-class RetrieveTestPost(TestCase):
+class TestUpdatePost(TestCase):
 
-    def test_retrieve_post(self):
+    def test_update_post(self):
 
         URL = config('URL')
         ID_POST = config('ID_POST')
