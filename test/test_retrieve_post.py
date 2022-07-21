@@ -17,14 +17,23 @@ from assertpy import assert_that
 from crud_post import CrudPost
 from decouple import config
 
+from helpers.login import Login
 
-class RetrieveTestPost(TestCase):
+
+class TestRetrievePost(TestCase):
 
     def test_retrieve_post(self):
 
         URL = config('URL')
         ID_POST = config('ID_POST')
-        TOKEN = config('TOKEN')
+
+        URI_TOKEN = config('URI_TOKEN')
+        USER_NAME = config('USER_NAME')
+        PASSWORD = config('PASSWORD')
+
+        response_login = Login().login(URI_TOKEN, USER_NAME, PASSWORD).json()
+
+        TOKEN = response_login['token_type'] + ' ' + response_login['jwt_token']
 
         crud_post = CrudPost()
         response_result = crud_post.retrieve_post(URL, TOKEN, ID_POST)
