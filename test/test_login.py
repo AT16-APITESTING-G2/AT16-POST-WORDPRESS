@@ -30,10 +30,7 @@ class TestLogin(TestCase):
 
         with soft_assertions():
             assert_that(response_login.status_code).is_equal_to(HTTPStatus.OK)
-            assert_that(response_login.status_code).is_equal_to(HTTPStatus.CREATED)
-            assert_that(response_login.status_code).is_equal_to(202)
 
-        assert_that(response_login.status_code).is_equal_to(204)
         assert_that(response_login.json()).contains("token_type")
         assert_that(response_login.json()['token_type']).is_equal_to('Bearer')
         assert_that(response_login.json()).contains("iat")
