@@ -16,7 +16,7 @@ import requests
 
 class CrudPost:
 
-    def create_post(self, url, token,title, content, page, status):
+    def create_post(self, url, token, title, content, page, status):
 
         payload = {'title': title,
                    'content': content,
