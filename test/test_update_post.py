@@ -18,12 +18,14 @@ from crud_post import CrudPost
 from decouple import config
 
 
-class TestUpdatePost(TestCase):
-    def test_update_post(self):
-        url = config('URL')
-        token = config('TOKEN')
-        content = config('CONTENT')
-        title = config('TITLE')
+
+class RetrieveTestPost(TestCase):
+
+    def test_retrieve_post(self):
+
+        URL = config('URL')
+        ID_POST = config('ID_POST')
+        TOKEN = config('TOKEN')
 
         crud_post = CrudPost()
         response = crud_post.update_post(url, token, title, content)
