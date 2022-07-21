@@ -44,6 +44,7 @@ class CrudPost:
         return response
 
     def retrieve_post(self, url, token, id_post):
+
         new_url = url + id_post
         payload = {}
         files = {}
