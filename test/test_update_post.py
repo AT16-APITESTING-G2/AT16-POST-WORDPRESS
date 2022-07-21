@@ -1,5 +1,5 @@
 #
-# @test_retrieve_post.py Copyright (c) 2022 Jalasoft
+# @test_update_post.py Copyright (c) 2022 Jalasoft
 # 2643 Av Melchor Perez de Olguin , Colquiri Sud, Cochabamba, Bolivia.
 # add direccion de jala la paz>
 # All rights reserved
@@ -13,19 +13,18 @@
 
 from http import HTTPStatus
 from unittest import TestCase
-from assertpy import assert_that
+from assertpy.assertpy import assert_that
 from crud_post import CrudPost
 from decouple import config
 
 
-class RetrieveTestPost(TestCase):
-
-    def test_retrieve_post(self):
-        URL = config('URL')
-        ID_POST = config('ID_POST')
-        TOKEN = config('TOKEN')
+class TestUpdatePost(TestCase):
+    def test_update_post(self):
+        url = config('URL')
+        token = config('TOKEN')
+        content = config('CONTENT')
+        title = config('TITLE')
 
         crud_post = CrudPost()
-        response_result = crud_post.retrieve_post(URL, TOKEN, ID_POST)
-
-        assert_that(response_result.status_code).is_equal_to(HTTPStatus.OK)
+        response = crud_post.update_post(url, token, title, content)
+        assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
