@@ -21,6 +21,7 @@ from decouple import config
 class RetrieveTestPost(TestCase):
 
     def test_retrieve_post(self):
+
         URL = config('URL')
         ID_POST = config('ID_POST')
         TOKEN = config('TOKEN')
