@@ -25,6 +25,7 @@ class DeletePost:
         id_post = config('ID_POST')
         token = config('TOKEN')
         crud_post = CrudPost()
+
         response = crud_post.delete_post(url, token, id_post)
         response_str_void = crud_post.delete_post(url, token, " ")
         assert_that(response.status_code).is_equal_to(http.HTTPStatus.OK)

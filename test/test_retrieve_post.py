@@ -12,7 +12,6 @@
 #
 
 from http import HTTPStatus
-from unittest import TestCase
 from assertpy import assert_that
 from crud_post import CrudPost
 from decouple import config
@@ -20,7 +19,7 @@ from decouple import config
 from helpers.login import Login
 
 
-class TestRetrievePost(TestCase):
+class TestRetrievePost:
 
     def test_retrieve_post(self):
 
