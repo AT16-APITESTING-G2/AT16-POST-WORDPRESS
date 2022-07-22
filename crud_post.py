@@ -13,6 +13,7 @@
 
 from utils.request import APIRequest
 
+
 class CrudPost:
 
     def create_post(self, url, token, title, content, page, status):
