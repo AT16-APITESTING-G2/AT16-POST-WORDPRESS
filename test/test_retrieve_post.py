@@ -12,54 +12,57 @@
 #
 
 from http import HTTPStatus
+
+import pytest
 from assertpy import assert_that
 from crud_post import CrudPost
 from decouple import config
-
+import json
 from helpers.login import Login
 
+TOKEN = None
 
-class TestRetrievePost:
 
-    def test_retrieve_post(self):
+def setup_module():
 
-        URL = config('URL')
-        ID_POST = config('ID_POST')
+    global TOKEN
 
-        URI_TOKEN = config('URI_TOKEN')
-        USER_NAME = config('USER_NAME')
-        PASSWORD = config('PASSWORD')
+    URI_TOKEN = config('URI_TOKEN')
+    USER_NAME = config('USER_NAME')
+    PASSWORD = config('PASSWORD')
 
-        response_login = Login().login(URI_TOKEN, USER_NAME, PASSWORD).json()
+    response_login = Login().login(URI_TOKEN, USER_NAME, PASSWORD).json()
 
-        TOKEN = response_login['token_type'] + ' ' + response_login['jwt_token']
+    TOKEN = response_login['token_type'] + ' ' + response_login['jwt_token']
 
-        crud_post = CrudPost()
-        response_result = crud_post.retrieve_post(URL, TOKEN, ID_POST)
+def test_retrieve_an_existing_post():
 
-        assert_that(response_result.status_code).is_equal_to(HTTPStatus.OK)
-        assert_that(response_result.json()).contains('id')
-        assert_that(response_result.json()['id']).is_instance_of(int)
-        assert_that(response_result.json()['id']).is_equal_to(54)
+    URL = config('URL')
+    ID_POST = config('ID_POST')
 
-    def test_retrieve_post_with_bad_id(self):
+    crud_post = CrudPost()
+    response = crud_post.retrieve_post(URL, TOKEN, ID_POST)
 
-        URL = config('URL')
-        ID_POST = '/90'
+    response_text = json.loads(response.text)
 
-        URI_TOKEN = config('URI_TOKEN')
-        USER_NAME = config('USER_NAME')
-        PASSWORD = config('PASSWORD')
+    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(response_text).contains('id')
+    assert_that(response_text['id']).is_instance_of(int)
+    assert_that(response_text['id']).is_equal_to(56)
 
-        response_login = Login().login(URI_TOKEN, USER_NAME, PASSWORD).json()
+def test_retrieve_a_post_with_a_bad_id():
 
-        TOKEN = response_login['token_type'] + ' ' + response_login['jwt_token']
+    URL = config('URL')
+    ID_POST = '/90'
 
-        crud_post = CrudPost()
+    crud_post = CrudPost()
 
-        response_result = crud_post.retrieve_post(URL, TOKEN, ID_POST)
-        assert_that(response_result.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
-        assert_that(response_result.json()).contains('code')
-        assert_that(response_result.json()['code']).is_equal_to('rest_post_invalid_id')
-        assert_that(response_result.json()).contains('message')
-        assert_that(response_result.json()['message']).is_equal_to('Invalid post ID.')
+    response = crud_post.retrieve_post(URL, TOKEN, ID_POST)
+
+    response_text = json.loads(response.text)
+
+    assert_that(response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
+    assert_that(response_text).contains('code')
+    assert_that(response_text['code']).is_equal_to('rest_post_invalid_id')
+    assert_that(response_text).contains('message')
+    assert_that(response_text['message']).is_equal_to('Invalid post ID.')
