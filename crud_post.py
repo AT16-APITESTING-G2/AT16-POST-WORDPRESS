@@ -11,8 +11,7 @@
 # with Jalasoft.
 #
 
-import requests
-
+from utils.request import APIRequest
 
 class CrudPost:
 
@@ -27,18 +26,16 @@ class CrudPost:
             'Authorization': token
         }
 
-        response = requests.request("POST", url, headers=headers, data=payload)
+        response = APIRequest().post(url, payload, headers)
         return response
 
     def delete_post(self, URL, token, id_post):
         url = URL + id_post
-        payload = {}
-        files = {}
 
         headers = {
             'Authorization': token
         }
-        response = requests.request("DELETE", url, headers=headers, data=payload, files=files)
+        response = APIRequest().delete(url, headers)
 
         print(response.text)
         return response
@@ -46,19 +43,19 @@ class CrudPost:
     def retrieve_post(self, url, token, id_post):
 
         new_url = url + id_post
-        payload = {}
-        files = {}
         headers = {
             'Authorization': token
         }
-
-        response = requests.get(new_url, headers=headers, data=payload, files=files)
+        response = APIRequest().get(new_url, headers)
         return response
 
-    def update_post(self, url, token, title, content):
+    def update_post(self, url, token, title, content, id_post):
+        new_url = url + id_post
+
         payload = {'title': title,
                    'content': content}
+
         headers = {'Authorization': token}
-        response = requests.request("POST", url, headers=headers, data=payload)
+        response = APIRequest().post(new_url, payload, headers)
         return response
         

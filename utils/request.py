@@ -24,21 +24,22 @@ class Response:
 
 
 class APIRequest:
-    def get(self, url):
-        response = requests.get(url)
+
+    def get(self, url, headers):
+        response = requests.get(url, headers=headers)
         return self.__get_responses(response)
 
     def post(self, url, payload, headers):
         response = requests.post(url, data=payload, headers=headers)
         return self.__get_responses(response)
 
-    def delete(self, url):
-        response = requests.delete(url)
+    def delete(self, url, headers):
+        response = requests.delete(url, headers=headers)
         return self.__get_responses(response)
 
     def __get_responses(self, response):
         status_code = response.status_code
-        text = response.texf
+        text = response.text
         try:
             as_dict = response.json()
         except Exception:
