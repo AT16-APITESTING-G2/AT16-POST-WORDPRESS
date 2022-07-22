@@ -12,14 +12,12 @@
 #
 
 import http
-import json
 from decouple import config
-from unittest import TestCase
 from assertpy import assert_that
 from crud_post import CrudPost
 
 
-class DeletePost(TestCase):
+class DeletePost:
 
     def test_delete_post(self):
 
