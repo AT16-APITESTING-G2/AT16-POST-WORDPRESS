@@ -10,22 +10,29 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-
-from http import HTTPStatus
-from unittest import TestCase
+import http
 from assertpy import assert_that
 from crud_post import CrudPost
 from decouple import config
+from helpers.login import Login
 
 
-class TestCreatePost(TestCase):
+class TestCreatePost:
+
     def test_create_post(self):
+
+        URI_TOKEN = config('URI_TOKEN')
+        USER_NAME = config('USER_NAME')
+        PASSWORD = config('PASSWORD')
+
         url = config('URL')
-        token = config('TOKEN')
         content = config('CONTENT')
         page = config('PAGE')
         status = config('STATUS')
         title = config('TITLE')
+
+        response_login = Login().login(URI_TOKEN, USER_NAME, PASSWORD).json()
+        token = response_login['token_type'] + ' ' + response_login['jwt_token']
 
         crud_post = CrudPost()
         response = crud_post.create_post(url, token, title, content, page, status)

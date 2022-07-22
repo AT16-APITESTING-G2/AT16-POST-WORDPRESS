@@ -12,21 +12,29 @@
 #
 
 from http import HTTPStatus
-from unittest import TestCase
 from assertpy.assertpy import assert_that
 from crud_post import CrudPost
 from decouple import config
 
+from helpers.login import Login
 
 
-class TestUpdatePost(TestCase):
+class TestUpdatePost:
 
     def test_update_post(self):
 
+        URI_TOKEN = config('URI_TOKEN')
+        USER_NAME = config('USER_NAME')
+        PASSWORD = config('PASSWORD')
+        TITLE = config('TITLE')
+        CONTENT = config('CONTENT')
+
         URL = config('URL')
         ID_POST = config('ID_POST')
-        TOKEN = config('TOKEN')
+
+        response_login = Login().login(URI_TOKEN, USER_NAME, PASSWORD).json()
+        token = response_login['token_type'] + ' ' + response_login['jwt_token']
 
         crud_post = CrudPost()
-        response = crud_post.update_post(url, token, title, content)
+        response = crud_post.update_post(URL, token, TITLE, CONTENT, ID_POST)
         assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
