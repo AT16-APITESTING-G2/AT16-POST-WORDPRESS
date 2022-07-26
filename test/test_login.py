@@ -13,9 +13,8 @@
 from http import HTTPStatus
 from unittest import TestCase
 from assertpy import assert_that, soft_assertions
-from crud_post import CrudPost
 from decouple import config
-from helpers.login import Login
+from model.login import Login
 
 
 class TestLogin(TestCase):

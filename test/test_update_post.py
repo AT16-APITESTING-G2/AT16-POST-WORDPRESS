@@ -13,28 +13,26 @@
 
 from http import HTTPStatus
 from assertpy.assertpy import assert_that
-from crud_post import CrudPost
+from model.crud_post import CrudPost
 from decouple import config
 
-from helpers.login import Login
+from model.login import Login
 
 
-class TestUpdatePost:
+def setup_module():
+    global TOKEN
 
-    def test_update_post(self):
+    TOKEN = Login().get_token()
 
-        URI_TOKEN = config('URI_TOKEN')
-        USER_NAME = config('USER_NAME')
-        PASSWORD = config('PASSWORD')
-        TITLE = config('TITLE')
-        CONTENT = config('CONTENT')
 
-        URL = config('URL')
-        ID_POST = config('ID_POST')
+def test_update_post():
 
-        response_login = Login().login(URI_TOKEN, USER_NAME, PASSWORD).json()
-        token = response_login['token_type'] + ' ' + response_login['jwt_token']
+    TITLE = config('TITLE')
+    CONTENT = config('CONTENT')
 
-        crud_post = CrudPost()
-        response = crud_post.update_post(URL, token, TITLE, CONTENT, ID_POST)
-        assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST)
+    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
