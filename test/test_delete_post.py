@@ -14,20 +14,24 @@
 import http
 from decouple import config
 from assertpy import assert_that
-from crud_post import CrudPost
+from model.crud_post import CrudPost
+from model.login import Login
 
 
-class DeletePost:
+def setup_module():
+    global TOKEN
 
-    def test_delete_post(self):
+    TOKEN = Login().get_token()
 
-        url = config('URL')
-        id_post = config('ID_POST')
-        token = config('TOKEN')
-        crud_post = CrudPost()
 
-        response = crud_post.delete_post(url, token, id_post)
-        response_str_void = crud_post.delete_post(url, token, " ")
-        assert_that(response.status_code).is_equal_to(http.HTTPStatus.OK)
-        assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
+def test_delete_post():
+
+    url = config('URL')
+    id_post = config('ID_POST')
+    crud_post = CrudPost(TOKEN)
+
+    response = crud_post.delete_post(url, id_post)
+    response_str_void = crud_post.delete_post(url, " ")
+    assert_that(response.status_code).is_equal_to(http.HTTPStatus.OK)
+    assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
 

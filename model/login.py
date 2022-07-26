@@ -12,6 +12,7 @@
 #
 
 import requests
+from decouple import config
 
 
 class Login:
@@ -27,3 +28,15 @@ class Login:
         response = requests.post(url, data=payload, headers=headers)
 
         return response
+
+    def get_token(self):
+
+        URI_TOKEN = config('URI_TOKEN')
+        USER_NAME = config('USER_NAME')
+        PASSWORD = config('PASSWORD')
+
+        response_login = self.login(URI_TOKEN, USER_NAME, PASSWORD).json()
+
+        TOKEN = response_login['token_type'] + ' ' + response_login['jwt_token']
+
+        return TOKEN

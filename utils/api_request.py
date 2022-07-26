@@ -1,5 +1,5 @@
 #
-# @test_update_post.py Copyright (c) 2022 Jalasoft
+# @api_request.py Copyright (c) 2022 Jalasoft
 # 2643 Av Melchor Perez de Olguin , Colquiri Sud, Cochabamba, Bolivia.
 # add direccion de jala la paz>
 # All rights reserved

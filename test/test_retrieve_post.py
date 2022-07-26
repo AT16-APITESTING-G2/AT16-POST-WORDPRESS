@@ -13,12 +13,11 @@
 
 from http import HTTPStatus
 
-import pytest
 from assertpy import assert_that
-from crud_post import CrudPost
+from model.crud_post import CrudPost
 from decouple import config
 import json
-from helpers.login import Login
+from model.login import Login
 
 TOKEN = None
 
@@ -27,21 +26,16 @@ def setup_module():
 
     global TOKEN
 
-    URI_TOKEN = config('URI_TOKEN')
-    USER_NAME = config('USER_NAME')
-    PASSWORD = config('PASSWORD')
+    TOKEN = Login().get_token()
 
-    response_login = Login().login(URI_TOKEN, USER_NAME, PASSWORD).json()
-
-    TOKEN = response_login['token_type'] + ' ' + response_login['jwt_token']
 
 def test_retrieve_an_existing_post():
 
     URL = config('URL')
     ID_POST = config('ID_POST')
 
-    crud_post = CrudPost()
-    response = crud_post.retrieve_post(URL, TOKEN, ID_POST)
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.retrieve_post(URL, ID_POST)
 
     response_text = json.loads(response.text)
 
@@ -50,14 +44,15 @@ def test_retrieve_an_existing_post():
     assert_that(response_text['id']).is_instance_of(int)
     assert_that(response_text['id']).is_equal_to(56)
 
+
 def test_retrieve_a_post_with_a_bad_id():
 
     URL = config('URL')
     ID_POST = '/90'
 
-    crud_post = CrudPost()
+    crud_post = CrudPost(TOKEN)
 
-    response = crud_post.retrieve_post(URL, TOKEN, ID_POST)
+    response = crud_post.retrieve_post(URL, ID_POST)
 
     response_text = json.loads(response.text)
 
