@@ -16,12 +16,13 @@ from utils.request import APIRequest
 
 class CrudPost:
 
-    def create_post(self, url, token, title, content, page, status):
+    def create_post(self, url, token, title, content, page, status, author):
 
         payload = {'title': title,
                    'content': content,
                    'page': page,
-                   'status': status}
+                   'status': status,
+                   'author': author}
 
         headers = {
             'Authorization': token
