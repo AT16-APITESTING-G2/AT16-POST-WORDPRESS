@@ -35,29 +35,63 @@ def test_retrieve_an_existing_post():
     ID_POST = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
-    response = crud_post.retrieve_post(URL, ID_POST)
+    api_request_response = crud_post.retrieve_post(URL, ID_POST)
 
-    response_text = json.loads(response.text)
+    response_text = json.loads(api_request_response.text)
 
-    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.OK)
     assert_that(response_text).contains('id')
     assert_that(response_text['id']).is_instance_of(int)
-    assert_that(response_text['id']).is_equal_to(56)
+    assert_that(response_text['id']).is_equal_to(108)
+
+
+def test_retrieve_a_post_with_a_bad_token():
+
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+    TOKEN = "Bearer abc12345"
+    crud_post = CrudPost(TOKEN)
+
+    api_request_response = crud_post.retrieve_post(URL, ID_POST)
+    print(api_request_response)
+    response_text = json.loads(api_request_response.text)
+
+    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.UNAUTHORIZED)
+    assert_that(response_text).contains('code')
+    assert_that(response_text['code']).is_equal_to('401')
 
 
 def test_retrieve_a_post_with_a_bad_id():
 
     URL = config('URL')
-    ID_POST = '/90'
+    ID_POST = '/900'
 
     crud_post = CrudPost(TOKEN)
 
-    response = crud_post.retrieve_post(URL, ID_POST)
+    api_request_response = crud_post.retrieve_post(URL, ID_POST)
 
-    response_text = json.loads(response.text)
+    response_text = json.loads(api_request_response.text)
 
-    assert_that(response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
+    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
     assert_that(response_text).contains('code')
     assert_that(response_text['code']).is_equal_to('rest_post_invalid_id')
     assert_that(response_text).contains('message')
     assert_that(response_text['message']).is_equal_to('Invalid post ID.')
+
+
+def test_retrieve_a_post_with_a_bad_route():
+
+    URL = '{}/bad_route'.format(config('URL'))
+    ID_POST = config('ID_POST')
+
+    crud_post = CrudPost(TOKEN)
+
+    api_request_response = crud_post.retrieve_post(URL, ID_POST)
+
+    response_text = json.loads(api_request_response.text)
+
+    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
+    assert_that(response_text).contains('code')
+    assert_that(response_text['code']).is_equal_to('rest_no_route')
+    assert_that(response_text).contains('message')
+    assert_that(response_text['message']).is_equal_to('No route was found matching the URL and request method.')
