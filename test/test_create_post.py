@@ -39,13 +39,56 @@ def test_create_post():
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
+
+
+def test_create_post_with_a_valid_id():
+
+    url = config('URL')
+    content = config('CONTENT')
+    page = config('PAGE')
+    author = config('AUTHOR')
+    status = config('STATUS')
+    title = config('TITLE')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.create_post(url, title, content, page, status, author)
+    response_text = json.loads(response.text)
+
+    assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     assert_that(response_text['id']).is_instance_of(int)
-    assert_that(response_text['id']).is_instance_of(int)
-    assert_that(response_text['author']).is_instance_of(int)
-    assert_that(response_text['type']).is_equal_to("post")
+
+def test_create_post_with_a_publish_status():
+
+    url = config('URL')
+    content = config('CONTENT')
+    page = config('PAGE')
+    author = config('AUTHOR')
+    status = config('STATUS')
+    title = config('TITLE')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.create_post(url, title, content, page, status, author)
+    response_text = json.loads(response.text)
+
+    assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     assert_that(response_text['status']).is_equal_to("publish")
+
+def test_create_post_with_standard_format_by_default():
+
+    url = config('URL')
+    content = config('CONTENT')
+    page = config('PAGE')
+    author = config('AUTHOR')
+    status = config('STATUS')
+    title = config('TITLE')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.create_post(url, title, content, page, status, author)
+    response_text = json.loads(response.text)
+
     assert_that(response_text['format']).is_equal_to("standard")
-    # assert_that(response_text['title']['raw']).is_equal_to('Created post 1')
+
+
 
 def test_create_post_with_void_title():
 
