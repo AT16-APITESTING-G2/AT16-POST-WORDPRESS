@@ -13,6 +13,7 @@
 
 import http
 from decouple import config
+import json
 from assertpy import assert_that
 from model.crud_post import CrudPost
 from model.login import Login
@@ -24,14 +25,31 @@ def setup_module():
     TOKEN = Login().get_token()
 
 
-def test_delete_post():
+def test_delete_post_statusok():
 
     url = config('URL')
     id_post = config('ID_POST')
     crud_post = CrudPost(TOKEN)
 
     response = crud_post.delete_post(url, id_post)
-    response_str_void = crud_post.delete_post(url, " ")
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.OK)
+
+def test_delete_post_status_void():
+
+    url = config('URL')
+    crud_post = CrudPost(TOKEN)
+
+    response_str_void = crud_post.delete_post(url, " ")
     assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
 
+def test_delete_post_status_invalid_id():
+    url = config('URL')
+    id_post = config('ID_POST')
+    crud_post = CrudPost(TOKEN)
+    comment_status = config('COMMENT_STATUS')
+
+    response = crud_post.update_post(url, id_post, comment_status)
+    response_text = json.loads(response.text)
+    assert_that(response.status_code).is_equal_to(http.HTTPStatus.BAD_REQUEST)
+    assert_that(response_text).contains('code')
+    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")

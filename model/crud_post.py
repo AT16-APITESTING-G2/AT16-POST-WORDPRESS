@@ -37,7 +37,6 @@ class CrudPost:
 
         response = APIRequest().delete(url, self.headers)
 
-        print(response.text)
         return response
 
     def retrieve_post(self, url, id_post):
