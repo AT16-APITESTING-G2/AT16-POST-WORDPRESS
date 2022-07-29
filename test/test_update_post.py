@@ -10,7 +10,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-
+import json
 from http import HTTPStatus
 from assertpy.assertpy import assert_that
 from model.crud_post import CrudPost
@@ -21,18 +21,133 @@ from model.login import Login
 
 def setup_module():
     global TOKEN
-
     TOKEN = Login().get_token()
 
 
 def test_update_post():
-
     TITLE = config('TITLE')
     CONTENT = config('CONTENT')
-
     URL = config('URL')
     ID_POST = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST)
+
+    response_text = json.loads(response.text)
+
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(response_text).contains('id')
+    assert_that(response_text['id']).is_instance_of(int)
+
+
+def test_update_author_post():
+    TITLE = config('TITLE')
+    CONTENT = config('CONTENT')
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+    AUTHOR = config('AUTHOR')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST, AUTHOR)
+
+    response_text = json.loads(response.text)
+
+    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(response_text).contains('author')
+    assert_that(response_text['author']).iis_instance_of(int)
+
+
+def test_update_status_post():
+    TITLE = config('TITLE')
+    CONTENT = config('CONTENT')
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+    STATUS_POST = config('STATUS_POST')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST, STATUS_POST)
+
+    response_text = json.loads(response.text)
+
+    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(response_text).contains('status')
+    assert_that(response_text['status']).is_instance_not_empty()
+
+
+def test_update_comment_status_post():
+    TITLE = config('TITLE')
+    CONTENT = config('CONTENT')
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+    COMMENT_STATUS = config('COMMENT_STATUS')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST, COMMENT_STATUS)
+
+    response_text = json.loads(response.text)
+    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(response_text).contains('comment_status')
+    assert_that(response_text['comment_status']).is_instance_not_empty()
+
+
+def test_invalid_id():
+    TITLE = config('TITLE')
+    CONTENT = config('CONTENT')
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST)
+
+    response_text = json.loads(response.text)
+    assert_that(response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
+    assert_that(response_text).contains('code')
+    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
+
+
+def test_invalid_status_field():
+    TITLE = config('TITLE')
+    CONTENT = config('CONTENT')
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+    STATUS = config ('STATUS')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST, STATUS)
+
+    response_text = json.loads(response.text)
+    assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+    assert_that(response_text).contains('code')
+    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
+
+
+def test_invalid_comment_status_field():
+    TITLE = config('TITLE')
+    CONTENT = config('CONTENT')
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+    COMMENT_STATUS = config('COMMENT_STATUS')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST, COMMENT_STATUS)
+
+    response_text = json.loads(response.text)
+    assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+    assert_that(response_text).contains('code')
+    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
+
+
+def test_invalid_ping_status_field():
+    TITLE = config('TITLE')
+    CONTENT = config('CONTENT')
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+    PING_STATUS = config('PING_STATUS')
+
+    crud_post = CrudPost(TOKEN)
+    response = crud_post.update_post(URL, TITLE, CONTENT, ID_POST, PING_STATUS)
+
+    response_text = json.loads(response.text)
+    assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+    assert_that(response_text).contains('code')
+    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
