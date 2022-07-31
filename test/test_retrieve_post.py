@@ -18,6 +18,7 @@ from model.crud_post import CrudPost
 from decouple import config
 import json
 from model.login import Login
+from utils.schema_validator import SchemaValidator
 
 TOKEN = None
 
@@ -95,3 +96,23 @@ def test_retrieve_a_post_with_a_bad_route():
     assert_that(response_text['code']).is_equal_to('rest_no_route')
     assert_that(response_text).contains('message')
     assert_that(response_text['message']).is_equal_to('No route was found matching the URL and request method.')
+
+
+def test_retrieve_schema_validator():
+    URL = config('URL')
+    ID_POST = config('ID_POST')
+
+    crud_post = CrudPost(TOKEN)
+    api_request_response = crud_post.retrieve_post(URL, ID_POST)
+
+    #response_text = json.loads(api_request_response.text)
+    response_text = {'name': 'john doe'}
+
+    #expected_schema = load_json_expected_result("resources/schema_response_retrieve_post.json")
+    expected_schema = {'name': {'type': 'string'}}
+
+    validator = SchemaValidator(expected_schema, True)
+
+    is_validate = validator.validate(response_text)
+    print(is_validate)
+    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.OK)

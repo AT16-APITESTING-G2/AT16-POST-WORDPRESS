@@ -21,13 +21,7 @@ class CrudPost:
             'Authorization': token
         }
 
-    def create_post(self, url, title, content, page, status, author):
-
-        payload = {'title': title,
-                   'content': content,
-                   'page': page,
-                   'status': status,
-                   'author': author}
+    def create_post(self, url, payload):
 
         response = APIRequest().post(url, payload, self.headers)
         return response
