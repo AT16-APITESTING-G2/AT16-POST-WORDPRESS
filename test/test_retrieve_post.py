@@ -22,6 +22,12 @@ from utils.schema_validator import SchemaValidator
 
 TOKEN = None
 
+def load_json_expected_result(path):
+
+    with open(path) as file_json:
+        file_json_dict = json.load(file_json)
+    return file_json_dict
+
 
 def setup_module():
 
@@ -105,14 +111,12 @@ def test_retrieve_schema_validator():
     crud_post = CrudPost(TOKEN)
     api_request_response = crud_post.retrieve_post(URL, ID_POST)
 
-    #response_text = json.loads(api_request_response.text)
-    response_text = {'name': 'john doe'}
+    response_text = json.loads(api_request_response.text)
 
-    #expected_schema = load_json_expected_result("resources/schema_response_retrieve_post.json")
-    expected_schema = {'name': {'type': 'string'}}
+    expected_schema = load_json_expected_result("resources/resource_retrieve_test/schema_retrieve_post.json")
 
-    validator = SchemaValidator(expected_schema, True)
+    validator = SchemaValidator(expected_schema, False)
 
     is_validate = validator.validate(response_text)
-    print(is_validate)
     assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(is_validate).is_true()
