@@ -75,7 +75,7 @@ def test_create_post_with_standard_format_by_default():
 def test_create_post_with_void_title():
 
     url = config('URL')
-    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_void_title")
+    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_void_title.json")
     crud_post = CrudPost(TOKEN)
     response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
