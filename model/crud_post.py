@@ -41,12 +41,8 @@ class CrudPost:
         response = APIRequest().get(new_url, self.headers)
         return response
 
-    def update_post(self, url, title, content, id_post):
-        new_url = url + id_post
-
-        payload = {'title': title,
-                   'content': content}
-
+    def update_post(self, url, id, payload):
+        new_url = url + id
         response = APIRequest().post(new_url, payload, self.headers)
         return response
         
