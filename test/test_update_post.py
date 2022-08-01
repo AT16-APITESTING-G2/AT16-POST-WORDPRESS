@@ -51,7 +51,7 @@ def test_update_author_post():
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
     assert_that(response_text).contains('author')
-    assert_that(response_text['author']).iis_instance_of(int)
+    assert_that(response_text['author']).is_instance_of(int)
 
 
 def test_update_status_post():
@@ -65,7 +65,7 @@ def test_update_status_post():
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
     assert_that(response_text).contains('status')
-    assert_that(response_text['status']).is_instance_not_empty()
+    assert_that(response_text['status']).is_not_empty()
 
 
 def test_update_comment_status_post():
@@ -79,7 +79,7 @@ def test_update_comment_status_post():
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
     assert_that(response_text).contains('comment_status')
-    assert_that(response_text['comment_status']).is_instance_not_empty()
+    assert_that(response_text['comment_status']).is_not_empty()
 
 
 def test_update_invalid_id():
@@ -107,7 +107,7 @@ def test_update_invalid_status_field():
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
     assert_that(response_text).contains('code')
-    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
+    assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
 def test_update_invalid_comment_status_field():
@@ -121,7 +121,7 @@ def test_update_invalid_comment_status_field():
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
     assert_that(response_text).contains('code')
-    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
+    assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
 def test_update_invalid_ping_status_field():
@@ -135,4 +135,4 @@ def test_update_invalid_ping_status_field():
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
     assert_that(response_text).contains('code')
-    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
+    assert_that(response_text['code']).is_equal_to("rest_invalid_param")
