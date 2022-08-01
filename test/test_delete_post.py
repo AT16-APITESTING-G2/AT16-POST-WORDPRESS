@@ -79,11 +79,13 @@ def test_delete_post_bad_id():
 def test_create_and_delete_post():
     url_created = config('URL_CREATED')
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_create_test/payload_create.json")
+    payload = load_json_expected_result("resources/resource_delete_test/payload_delete_post.json")
     response = crud_post.create_post(url_created, payload)
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     url = config('URL')
-    id_response = str(response.text[6:8])
+    id_response = json.loads(response.text)['id']
+    print(response)
+    print(id_response)
     id_post = f"/{id_response}"
     response_deleted = crud_post.delete_post(url, id_post)
     assert_that(response_deleted.status_code).is_equal_to(http.HTTPStatus.OK)
