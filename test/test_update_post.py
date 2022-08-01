@@ -32,7 +32,7 @@ def test_update_post():
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_post.json")
-    response = crud_post.update_post(url,id, payload)
+    response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
