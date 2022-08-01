@@ -42,7 +42,7 @@ def test_delete_post():
 
 def test_delete_post_status_unauthorized():
     url = config('URL')
-    id_post = config('ID_POST')
+    id_post = config('ID_POST_404')
     crud_post = CrudPost("")
 
     response_str_void = crud_post.delete_post(url, id_post)
@@ -60,7 +60,7 @@ def test_delete_post_status_void_id():
 
 def test_delete_post_bad_url():
     url = 'http://localhost/wordpress/wp-json/wp/v2/posts/36'
-    id_post = config('ID_POST')
+    id_post = config('ID_POST_405')
     crud_post = CrudPost(TOKEN)
     response = crud_post.delete_post(url, id_post)
 
@@ -84,8 +84,6 @@ def test_create_and_delete_post():
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     url = config('URL')
     id_response = json.loads(response.text)['id']
-    print(response)
-    print(id_response)
     id_post = f"/{id_response}"
     response_deleted = crud_post.delete_post(url, id_post)
     assert_that(response_deleted.status_code).is_equal_to(http.HTTPStatus.OK)
