@@ -33,60 +33,39 @@ def setup_module():
 
 
 def test_create_post():
-
     url = config('URL')
-
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_create_test/payload_create.json")
-
+    payload = load_json_expected_result("resources/resource_create_test/payload_create_post.json")
     response = crud_post.create_post(url, payload)
-    response_text = json.loads(response.text)
+
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
 
 
 def test_create_post_with_a_valid_id():
-
     url = config('URL')
-    content = config('CONTENT')
-    page = config('PAGE')
-    author = config('AUTHOR')
-    status = config('STATUS')
-    title = config('TITLE')
-
     crud_post = CrudPost(TOKEN)
-    response = crud_post.create_post(url, title, content, page, status, author)
+    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_valid_id.json")
+    response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     assert_that(response_text['id']).is_instance_of(int)
 
 def test_create_post_with_a_publish_status():
-
     url = config('URL')
-    content = config('CONTENT')
-    page = config('PAGE')
-    author = config('AUTHOR')
-    status = config('STATUS')
-    title = config('TITLE')
-
     crud_post = CrudPost(TOKEN)
-    response = crud_post.create_post(url, title, content, page, status, author)
+    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_publish_status.json")
+    response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
-    assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     assert_that(response_text['status']).is_equal_to("publish")
 
 def test_create_post_with_standard_format_by_default():
 
     url = config('URL')
-    content = config('CONTENT')
-    page = config('PAGE')
-    author = config('AUTHOR')
-    status = config('STATUS')
-    title = config('TITLE')
-
     crud_post = CrudPost(TOKEN)
-    response = crud_post.create_post(url, title, content, page, status, author)
+    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_default_standard_format.json")
+    response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
     assert_that(response_text['format']).is_equal_to("standard")
@@ -96,31 +75,18 @@ def test_create_post_with_standard_format_by_default():
 def test_create_post_with_void_title():
 
     url = config('URL')
-    content = config('CONTENT')
-    page = config('PAGE')
-    author = config('AUTHOR')
-    status = config('STATUS')
-    title = ''
-
+    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_void_title.json")
     crud_post = CrudPost(TOKEN)
-    response = crud_post.create_post(url, title, content, page, status, author)
+    response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
-    assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
-    assert_that(response_text['title']['raw']).is_empty()
-    assert_that(response_text['title']['raw']).is_not_equal_to('Created post 1')
+    assert_that(response.status_code).is_equal_to(http.HTTPStatus.BAD_REQUEST)
 
 def test_create_post_with_void_status():
-
     url = config('URL')
-    content = config('CONTENT')
-    page = config('PAGE')
-    author = config('AUTHOR')
-    status = ''
-    title = config('TITLE')
-
+    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_void_status.json")
     crud_post = CrudPost(TOKEN)
-    response = crud_post.create_post(url, title, content, page, status, author)
+    response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.BAD_REQUEST)
@@ -131,12 +97,12 @@ def test_create_post_with_void_status():
 def test_create_post_with_invalid_author_id():
 
     url = config('URL')
-
+    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_invalid_author_id.json")
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_create_test/payload_create.json")
     response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.BAD_REQUEST)
     assert_that(response_text['code']).is_equal_to('rest_invalid_author')
     assert_that(response_text['message']).is_equal_to('Invalid author ID.')
+
