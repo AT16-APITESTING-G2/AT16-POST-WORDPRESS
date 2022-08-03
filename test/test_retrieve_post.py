@@ -11,8 +11,8 @@
 # with Jalasoft.
 #
 
+import pytest
 from http import HTTPStatus
-
 from assertpy import assert_that
 from model.crud_post import CrudPost
 from decouple import config
@@ -21,6 +21,7 @@ from model.login import Login
 from utils.schema_validator import SchemaValidator
 
 TOKEN = None
+
 
 def load_json_expected_result(path):
 
@@ -36,6 +37,9 @@ def setup_module():
     TOKEN = Login().get_token()
 
 
+@pytest.mark.sanity_testing
+@pytest.mark.acceptance_testing
+@pytest.mark.regression_testing
 def test_retrieve_an_existing_post():
 
     URL = config('URL')
@@ -52,6 +56,9 @@ def test_retrieve_an_existing_post():
     assert_that(response_text['id']).is_equal_to(108)
 
 
+@pytest.mark.security_testing
+@pytest.mark.sanity_testing
+@pytest.mark.regression_testing
 def test_retrieve_a_post_with_a_bad_token():
 
     URL = config('URL')
@@ -68,6 +75,8 @@ def test_retrieve_a_post_with_a_bad_token():
     assert_that(response_text['code']).is_equal_to('401')
 
 
+@pytest.mark.sanity_testing
+@pytest.mark.blackbox_testing
 def test_retrieve_a_post_with_a_bad_id():
 
     URL = config('URL')
@@ -86,6 +95,8 @@ def test_retrieve_a_post_with_a_bad_id():
     assert_that(response_text['message']).is_equal_to('Invalid post ID.')
 
 
+@pytest.mark.sanity_testing
+@pytest.mark.blackbox_testing
 def test_retrieve_a_post_with_a_bad_route():
 
     URL = '{}/bad_route'.format(config('URL'))
@@ -104,6 +115,8 @@ def test_retrieve_a_post_with_a_bad_route():
     assert_that(response_text['message']).is_equal_to('No route was found matching the URL and request method.')
 
 
+@pytest.mark.sanity_testing
+@pytest.mark.blackbox_testing
 def test_retrieve_schema_validator():
     URL = config('URL')
     ID_POST = config('ID_POST')
