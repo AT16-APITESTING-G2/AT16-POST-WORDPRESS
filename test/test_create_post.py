@@ -32,9 +32,9 @@ def setup_module():
     TOKEN = Login().get_token()
 
 
-def test_create_post():
+def test_create_post(crud_post):
     url = config('URL')
-    crud_post = CrudPost(TOKEN)
+    #crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_create_test/payload_create_post.json")
     response = crud_post.create_post(url, payload)
 
