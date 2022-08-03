@@ -13,6 +13,7 @@
 
 import http
 import json
+import pytest
 from assertpy import assert_that
 from model.crud_post import CrudPost
 from decouple import config
@@ -32,6 +33,7 @@ def setup_module():
     TOKEN = Login().get_token()
 
 
+@pytest.mark.aceptance_testing
 def test_create_post():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -41,6 +43,7 @@ def test_create_post():
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
 
 
+@pytest.mark.aceptance_testing
 def test_create_post_with_a_valid_id():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -51,6 +54,8 @@ def test_create_post_with_a_valid_id():
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     assert_that(response_text['id']).is_instance_of(int)
 
+
+@pytest.mark.aceptance_testing
 def test_create_post_with_a_publish_status():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -60,6 +65,8 @@ def test_create_post_with_a_publish_status():
 
     assert_that(response_text['status']).is_equal_to("publish")
 
+
+@pytest.mark.negative_testing
 def test_create_post_with_standard_format_by_default():
 
     url = config('URL')
@@ -71,7 +78,7 @@ def test_create_post_with_standard_format_by_default():
     assert_that(response_text['format']).is_equal_to("standard")
 
 
-
+@pytest.mark.negative_testing
 def test_create_post_with_void_title():
 
     url = config('URL')
@@ -82,6 +89,8 @@ def test_create_post_with_void_title():
 
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.BAD_REQUEST)
 
+
+@pytest.mark.negative_testing
 def test_create_post_with_void_status():
     url = config('URL')
     payload = load_json_expected_result("resources/resource_create_test/payload_create_post_void_status.json")
@@ -94,6 +103,7 @@ def test_create_post_with_void_status():
     assert_that(response_text['data']['details']['status']['data']).is_equal_to(None)
 
 
+@pytest.mark.negative_testing
 def test_create_post_with_invalid_author_id():
 
     url = config('URL')

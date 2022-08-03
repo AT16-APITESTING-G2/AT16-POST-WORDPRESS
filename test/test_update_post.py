@@ -11,6 +11,7 @@
 # with Jalasoft.
 #
 import json
+import pytest
 from http import HTTPStatus
 from assertpy.assertpy import assert_that
 from model.crud_post import CrudPost
@@ -26,6 +27,8 @@ def setup_module():
     TOKEN = Login().get_token()
 
 
+@pytest.mark.aceptance_testing
+@pytest.mark.smoke_testing
 def test_update_post():
     url = config('URL')
     id = config('ID_POST')
@@ -40,6 +43,8 @@ def test_update_post():
     assert_that(response_text['id']).is_instance_of(int)
 
 
+@pytest.mark.aceptance_testing
+@pytest.mark.functional_testing
 def test_update_author_post():
     url = config('URL')
     id = config('ID_POST')
@@ -54,6 +59,8 @@ def test_update_author_post():
     assert_that(response_text['author']).is_instance_of(int)
 
 
+@pytest.mark.aceptance_testing
+@pytest.mark.functional_testing
 def test_update_status_post():
     url = config('URL')
     id = config('ID_POST')
@@ -68,6 +75,8 @@ def test_update_status_post():
     assert_that(response_text['status']).is_not_empty()
 
 
+@pytest.mark.aceptance_testing
+@pytest.mark.functional_testing
 def test_update_comment_status_post():
     url = config('URL')
     id = config('ID_POST')
@@ -82,6 +91,8 @@ def test_update_comment_status_post():
     assert_that(response_text['comment_status']).is_not_empty()
 
 
+@pytest.mark.negative_testing
+@pytest.mark.regression_testing
 def test_update_invalid_id():
     url = config('URL')
     id = "9999999"
@@ -96,6 +107,8 @@ def test_update_invalid_id():
     assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
 
 
+@pytest.mark.negative_testing
+@pytest.mark.regression_testing
 def test_update_invalid_status_field():
     url = config('URL')
     id = config('ID_POST')
@@ -110,6 +123,8 @@ def test_update_invalid_status_field():
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
+@pytest.mark.negative_testing
+@pytest.mark.regression_testing
 def test_update_invalid_comment_status_field():
     url = config('URL')
     id = config('ID_POST')
@@ -124,6 +139,8 @@ def test_update_invalid_comment_status_field():
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
+@pytest.mark.negative_testing
+@pytest.mark.regression_testing
 def test_update_invalid_ping_status_field():
     url = config('URL')
     id = config('ID_POST')
