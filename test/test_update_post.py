@@ -27,14 +27,14 @@ def setup_module():
     TOKEN = Login().get_token()
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 @pytest.mark.smoke_testing
 def test_update_post():
     url = config('URL')
     id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_update_test/payload_update_post.json")
+    payload = load_json_expected_result("test/resources/resource_update_test/payload_update_post.json")
     response = crud_post.update_post(url,id, payload)
     response_text = json.loads(response.text)
 
@@ -43,14 +43,14 @@ def test_update_post():
     assert_that(response_text['id']).is_instance_of(int)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 @pytest.mark.functional_testing
 def test_update_author_post():
     url = config('URL')
     id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_update_test/payload_update_author_post.json")
+    payload = load_json_expected_result("test/resources/resource_update_test/payload_update_author_post.json")
     response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
 
@@ -59,14 +59,14 @@ def test_update_author_post():
     assert_that(response_text['author']).is_instance_of(int)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 @pytest.mark.functional_testing
 def test_update_status_post():
     url = config('URL')
     id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_update_test/payload_update_status_post.json")
+    payload = load_json_expected_result("test/resources/resource_update_test/payload_update_status_post.json")
     response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
 
@@ -75,14 +75,14 @@ def test_update_status_post():
     assert_that(response_text['status']).is_not_empty()
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 @pytest.mark.functional_testing
 def test_update_comment_status_post():
     url = config('URL')
     id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_update_test/payload_update_comment_status_post.json")
+    payload = load_json_expected_result("test/resources/resource_update_test/payload_update_comment_status_post.json")
     response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
 
@@ -98,13 +98,13 @@ def test_update_invalid_id():
     id = "9999999"
 
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_id.json")
+    payload = load_json_expected_result("test/resources/resource_update_test/payload_update_invalid_id.json")
     response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
     assert_that(response_text).contains('code')
-    assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
+    assert_that(response_text['code']).is_equal_to("rest_no_route")
 
 
 @pytest.mark.negative_testing
@@ -114,7 +114,7 @@ def test_update_invalid_status_field():
     id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_status_field.json")
+    payload = load_json_expected_result("test/resources/resource_update_test/payload_update_invalid_status_field.json")
     response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
 
@@ -130,7 +130,7 @@ def test_update_invalid_comment_status_field():
     id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_status_field.json")
+    payload = load_json_expected_result("test/resources/resource_update_test/payload_update_invalid_status_field.json")
     response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
 
@@ -146,7 +146,7 @@ def test_update_invalid_ping_status_field():
     id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_ping_status_field.json")
+    payload = load_json_expected_result("test/resources/resource_update_test/payload_update_invalid_ping_status_field.json")
     response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
 

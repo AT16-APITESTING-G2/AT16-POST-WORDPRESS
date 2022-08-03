@@ -33,7 +33,7 @@ def load_json_expected_result(path):
     return file_json_dict
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 def test_delete_post():
     url = config('URL')
     id_post = config('ID_POST')
@@ -52,7 +52,7 @@ def test_delete_post_status_unauthorized():
     assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.UNAUTHORIZED)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 def test_delete_post_status_void_id():
     url = config('URL')
     id_post = ''
@@ -62,32 +62,32 @@ def test_delete_post_status_void_id():
     assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 def test_delete_post_bad_url():
-    url = 'http://localhost/wordpress/wp-json/wp/v2/posts/36'
+    url = 'http://localhost/wordpress/wp-json/wp/v2/post/new/36'
     id_post = config('ID_POST_405')
     crud_post = CrudPost(TOKEN)
     response = crud_post.delete_post(url, id_post)
 
-    assert_that(response.status_code).is_equal_to(http.HTTPStatus.METHOD_NOT_ALLOWED)
+    assert_that(response.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 def test_delete_post_bad_id():
     url = config('URL')
     id_post = config('ID_POST_BAD_ID')
     crud_post = CrudPost(TOKEN)
 
     response = crud_post.delete_post(url, id_post)
-    assert_that(response.status_code).is_equal_to(http.HTTPStatus.GONE)
+    assert_that(response.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 @pytest.mark.endtoend_testing
 def test_create_and_delete_post():
     url_created = config('URL_CREATED')
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_delete_test/payload_delete_post.json")
+    payload = load_json_expected_result("test/resources/resource_delete_test/payload_delete_post.json")
     response = crud_post.create_post(url_created, payload)
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     url = config('URL')
