@@ -27,20 +27,33 @@ def load_json_expected_result(path):
     return file_json_dict
 
 
-def setup_module():
+@pytest.fixture(autouse=True)
+def setup_prerequisites():
     global TOKEN
-
     TOKEN = Login().get_token()
+
+
+@pytest.fixture
+def teardown_delete_test():
+    global ID_POST
+    pass
+    yield
+    URL = config("URL")
+    crud_post = CrudPost(TOKEN)
+    crud_post.delete_post(URL, ID_POST)
 
 
 @pytest.mark.aceptance_testing
 def test_create_post():
+
     url = config('URL')
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_create_test/payload_create_post.json")
     response = crud_post.create_post(url, payload)
-
+    response_dict = json.loads(response.text)
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
+    id_post = response_dict['id']
+    crud_post.delete_post(url, id_post)
 
 
 @pytest.mark.aceptance_testing
@@ -53,6 +66,8 @@ def test_create_post_with_a_valid_id():
 
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
     assert_that(response_text['id']).is_instance_of(int)
+    id_post = response_text['id']
+    crud_post.delete_post(url, id_post)
 
 
 @pytest.mark.aceptance_testing
@@ -64,6 +79,8 @@ def test_create_post_with_a_publish_status():
     response_text = json.loads(response.text)
 
     assert_that(response_text['status']).is_equal_to("publish")
+    id_post = response_text['id']
+    crud_post.delete_post(url, id_post)
 
 
 @pytest.mark.negative_testing
@@ -76,6 +93,8 @@ def test_create_post_with_standard_format_by_default():
     response_text = json.loads(response.text)
 
     assert_that(response_text['format']).is_equal_to("standard")
+    id_post = response_text['id']
+    crud_post.delete_post(url, id_post)
 
 
 @pytest.mark.negative_testing

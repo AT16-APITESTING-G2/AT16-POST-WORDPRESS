@@ -22,20 +22,30 @@ from test.test_create_post import load_json_expected_result
 from utils.schema_validator import SchemaValidator
 
 
-def setup_module():
+@pytest.fixture(autouse=True)
+def setup_prerequisites():
     global TOKEN
+    global ID_POST
+
+    URL = config("URL")
+    payload = load_json_expected_result("resources/resource_retrieve_test/payload_create_post.json")
     TOKEN = Login().get_token()
+    crud_post = CrudPost(TOKEN)
+
+    api_request_response = json.loads((crud_post.create_post(URL, payload)).text)
+    ID_POST = api_request_response['id']
+    yield
+    crud_post.delete_post(URL, ID_POST)
 
 
 @pytest.mark.aceptance_testing
 @pytest.mark.smoke_testing
 def test_update_post():
     url = config('URL')
-    id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_post.json")
-    response = crud_post.update_post(url,id, payload)
+    response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
@@ -47,11 +57,10 @@ def test_update_post():
 @pytest.mark.functional_testing
 def test_update_author_post():
     url = config('URL')
-    id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_author_post.json")
-    response = crud_post.update_post(url, id, payload)
+    response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
@@ -63,11 +72,10 @@ def test_update_author_post():
 @pytest.mark.functional_testing
 def test_update_status_post():
     url = config('URL')
-    id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_status_post.json")
-    response = crud_post.update_post(url, id, payload)
+    response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
@@ -79,11 +87,10 @@ def test_update_status_post():
 @pytest.mark.functional_testing
 def test_update_comment_status_post():
     url = config('URL')
-    id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_comment_status_post.json")
-    response = crud_post.update_post(url, id, payload)
+    response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
@@ -95,7 +102,7 @@ def test_update_comment_status_post():
 @pytest.mark.regression_testing
 def test_update_invalid_id():
     url = config('URL')
-    id = "9999999"
+    id = 9999999
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_id.json")
@@ -111,11 +118,10 @@ def test_update_invalid_id():
 @pytest.mark.regression_testing
 def test_update_invalid_status_field():
     url = config('URL')
-    id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_status_field.json")
-    response = crud_post.update_post(url, id, payload)
+    response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
@@ -127,11 +133,10 @@ def test_update_invalid_status_field():
 @pytest.mark.regression_testing
 def test_update_invalid_comment_status_field():
     url = config('URL')
-    id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_status_field.json")
-    response = crud_post.update_post(url, id, payload)
+    response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
@@ -143,11 +148,10 @@ def test_update_invalid_comment_status_field():
 @pytest.mark.regression_testing
 def test_update_invalid_ping_status_field():
     url = config('URL')
-    id = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_ping_status_field.json")
-    response = crud_post.update_post(url, id, payload)
+    response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
