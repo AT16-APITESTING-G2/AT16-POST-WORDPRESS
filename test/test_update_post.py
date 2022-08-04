@@ -11,6 +11,8 @@
 # with Jalasoft.
 #
 import json
+
+import allure
 import pytest
 from http import HTTPStatus
 from assertpy.assertpy import assert_that
@@ -38,8 +40,12 @@ def setup_prerequisites():
     crud_post.delete_post(URL, ID_POST)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 @pytest.mark.smoke_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
+@allure.suite("acceptance_testing")
 def test_update_post():
     url = config('URL')
 
@@ -53,8 +59,10 @@ def test_update_post():
     assert_that(response_text['id']).is_instance_of(int)
 
 
-@pytest.mark.aceptance_testing
 @pytest.mark.functional_testing
+@pytest.mark.regression_testing
+@allure.suite("functional_testing")
+@allure.suite("regression_testing")
 def test_update_author_post():
     url = config('URL')
 
@@ -68,8 +76,10 @@ def test_update_author_post():
     assert_that(response_text['author']).is_instance_of(int)
 
 
-@pytest.mark.aceptance_testing
 @pytest.mark.functional_testing
+@pytest.mark.regression_testing
+@allure.suite("functional_testing")
+@allure.suite("regression_testing")
 def test_update_status_post():
     url = config('URL')
 
@@ -83,8 +93,10 @@ def test_update_status_post():
     assert_that(response_text['status']).is_not_empty()
 
 
-@pytest.mark.aceptance_testing
 @pytest.mark.functional_testing
+@pytest.mark.regression_testing
+@allure.suite("functional_testing")
+@allure.suite("regression_testing")
 def test_update_comment_status_post():
     url = config('URL')
 
@@ -100,6 +112,8 @@ def test_update_comment_status_post():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_update_invalid_id():
     url = config('URL')
     id = 9999999
@@ -116,6 +130,8 @@ def test_update_invalid_id():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_update_invalid_status_field():
     url = config('URL')
 
@@ -131,6 +147,8 @@ def test_update_invalid_status_field():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_update_invalid_comment_status_field():
     url = config('URL')
 
@@ -146,6 +164,8 @@ def test_update_invalid_comment_status_field():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_update_invalid_ping_status_field():
     url = config('URL')
 
