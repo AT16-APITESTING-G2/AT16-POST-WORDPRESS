@@ -13,6 +13,7 @@
 
 import http
 import json
+import allure
 import pytest
 from assertpy import assert_that
 from model.crud_post import CrudPost
@@ -33,21 +34,29 @@ def setup_module():
     TOKEN = Login().get_token()
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
+@pytest.mark.smoke_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
+@allure.suite("smoke_testing")
 def test_create_post():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_create_test/payload_create_post.json")
+    payload = load_json_expected_result("test/resources/resource_create_test/payload_create_post.json")
     response = crud_post.create_post(url, payload)
 
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_create_post_with_a_valid_id():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_valid_id.json")
+    payload = load_json_expected_result("test/resources/resource_create_test/payload_create_post_valid_id.json")
     response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
@@ -55,11 +64,14 @@ def test_create_post_with_a_valid_id():
     assert_that(response_text['id']).is_instance_of(int)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_create_post_with_a_publish_status():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_publish_status.json")
+    payload = load_json_expected_result("test/resources/resource_create_test/payload_create_post_publish_status.json")
     response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
@@ -67,11 +79,14 @@ def test_create_post_with_a_publish_status():
 
 
 @pytest.mark.negative_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_create_post_with_standard_format_by_default():
 
     url = config('URL')
     crud_post = CrudPost(TOKEN)
-    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_default_standard_format.json")
+    payload = load_json_expected_result("test/resources/resource_create_test/payload_create_post_default_standard_format.json")
     response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
@@ -79,10 +94,13 @@ def test_create_post_with_standard_format_by_default():
 
 
 @pytest.mark.negative_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_create_post_with_void_title():
 
     url = config('URL')
-    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_void_title.json")
+    payload = load_json_expected_result("test/resources/resource_create_test/payload_create_post_void_title.json")
     crud_post = CrudPost(TOKEN)
     response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
@@ -91,9 +109,12 @@ def test_create_post_with_void_title():
 
 
 @pytest.mark.negative_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_create_post_with_void_status():
     url = config('URL')
-    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_void_status.json")
+    payload = load_json_expected_result("test/resources/resource_create_test/payload_create_post_void_status.json")
     crud_post = CrudPost(TOKEN)
     response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
@@ -104,15 +125,17 @@ def test_create_post_with_void_status():
 
 
 @pytest.mark.negative_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_create_post_with_invalid_author_id():
 
     url = config('URL')
-    payload = load_json_expected_result("resources/resource_create_test/payload_create_post_invalid_author_id.json")
+    payload = load_json_expected_result("test/resources/resource_create_test/payload_create_post_invalid_author_id.json")
     crud_post = CrudPost(TOKEN)
     response = crud_post.create_post(url, payload)
     response_text = json.loads(response.text)
 
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.BAD_REQUEST)
-    assert_that(response_text['code']).is_equal_to('rest_invalid_author')
-    assert_that(response_text['message']).is_equal_to('Invalid author ID.')
+
 
