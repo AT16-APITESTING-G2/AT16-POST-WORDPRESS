@@ -13,6 +13,8 @@
 
 import http
 import json
+
+import allure
 import pytest
 from decouple import config
 from assertpy import assert_that
@@ -49,7 +51,12 @@ def load_json_expected_result(path):
     return file_json_dict
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
+@pytest.mark.smoke_testing
+@pytest.mark.regression_testing
+@allure.suite("acceptance_testing")
+@allure.suite("smoke_testing")
+@allure.suite("regression_testing")
 def test_delete_post():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -58,6 +65,9 @@ def test_delete_post():
 
 
 @pytest.mark.negative_testing
+@pytest.mark.regression_testing
+@allure.suite("negative_testing")
+@allure.suite("regression_testing")
 def test_delete_post_status_unauthorized(teardown_delete_test):
     url = config('URL')
     TOKEN = "Bearer abc12345"
@@ -67,7 +77,10 @@ def test_delete_post_status_unauthorized(teardown_delete_test):
     assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.UNAUTHORIZED)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
+@pytest.mark.regression_testing
+@allure.suite("acceptance_testing")
+@allure.suite("regression_testing")
 def test_delete_post_status_void_id(teardown_delete_test):
     url = config('URL')
     id_post = -1
@@ -77,7 +90,10 @@ def test_delete_post_status_void_id(teardown_delete_test):
     assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
+@pytest.mark.regression_testing
+@allure.suite("acceptance_testing")
+@allure.suite("regression_testing")
 def test_delete_post_bad_url(teardown_delete_test):
     url = 'http://localhost/bad_database/wp-json/wp/v2/posts'
     crud_post = CrudPost(TOKEN)
@@ -86,7 +102,10 @@ def test_delete_post_bad_url(teardown_delete_test):
     assert_that(response.status_code).is_equal_to(http.HTTPStatus.METHOD_NOT_ALLOWED)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
+@pytest.mark.regression_testing
+@allure.suite("acceptance_testing")
+@allure.suite("regression_testing")
 def test_delete_post_bad_id():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -96,8 +115,12 @@ def test_delete_post_bad_id():
     assert_that(second_response.status_code).is_equal_to(http.HTTPStatus.GONE)
 
 
-@pytest.mark.aceptance_testing
+@pytest.mark.acceptance_testing
 @pytest.mark.endtoend_testing
+@pytest.mark.regression_testing
+@allure.suite("acceptance_testing")
+@allure.suite("endtoend_testing")
+@allure.suite("regression_testing")
 def test_create_and_delete_post(teardown_delete_test):
     url_created = config("URL")
     crud_post = CrudPost(TOKEN)
