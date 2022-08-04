@@ -37,9 +37,9 @@ def setup_module():
 @pytest.mark.acceptance_testing
 @pytest.mark.smoke_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
-@allure.suite("regression_testing")
-@allure.suite("smoke_testing")
+@allure.id("negative_testing")
+@allure.id("regression_testing")
+@allure.epic("smoke_testing")
 def test_create_post():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -51,8 +51,8 @@ def test_create_post():
 
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
-@allure.suite("regression_testing")
+@allure.id("negative_testing")
+@allure.id("regression_testing")
 def test_create_post_with_a_valid_id():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -66,8 +66,8 @@ def test_create_post_with_a_valid_id():
 
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
-@allure.suite("regression_testing")
+@allure.id("negative_testing")
+@allure.id("regression_testing")
 def test_create_post_with_a_publish_status():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -80,8 +80,8 @@ def test_create_post_with_a_publish_status():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
-@allure.suite("regression_testing")
+@allure.id("negative_testing")
+@allure.id("regression_testing")
 def test_create_post_with_standard_format_by_default():
 
     url = config('URL')
@@ -95,8 +95,8 @@ def test_create_post_with_standard_format_by_default():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
-@allure.suite("regression_testing")
+@allure.id("negative_testing")
+@allure.id("regression_testing")
 def test_create_post_with_void_title():
 
     url = config('URL')
@@ -110,8 +110,8 @@ def test_create_post_with_void_title():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
-@allure.suite("regression_testing")
+@allure.id("negative_testing")
+@allure.id("regression_testing")
 def test_create_post_with_void_status():
     url = config('URL')
     payload = load_json_expected_result("test/resources/resource_create_test/payload_create_post_void_status.json")
@@ -126,8 +126,8 @@ def test_create_post_with_void_status():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
-@allure.suite("regression_testing")
+@allure.id("negative_testing")
+@allure.id("regression_testing")
 def test_create_post_with_invalid_author_id():
 
     url = config('URL')

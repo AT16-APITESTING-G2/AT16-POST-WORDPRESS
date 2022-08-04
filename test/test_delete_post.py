@@ -37,9 +37,9 @@ def load_json_expected_result(path):
 @pytest.mark.acceptance_testing
 @pytest.mark.smoke_testing
 @pytest.mark.regression_testing
-@allure.suite("acceptance_testing")
-@allure.suite("smoke_testing")
-@allure.suite("regression_testing")
+@allure.id("acceptance_testing")
+@allure.epic("smoke_testing")
+@allure.id("regression_testing")
 def test_delete_post():
     url = config('URL')
     id_post = config('ID_POST')
@@ -50,8 +50,8 @@ def test_delete_post():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
-@allure.suite("regression_testing")
+@allure.id("negative_testing")
+@allure.id("regression_testing")
 def test_delete_post_status_unauthorized():
     url = config('URL')
     id_post = config('ID_POST_404')
@@ -63,8 +63,8 @@ def test_delete_post_status_unauthorized():
 
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
-@allure.suite("acceptance_testing")
-@allure.suite("regression_testing")
+@allure.id("acceptance_testing")
+@allure.id("regression_testing")
 def test_delete_post_status_void_id():
     url = config('URL')
     id_post = ''
@@ -76,8 +76,8 @@ def test_delete_post_status_void_id():
 
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
-@allure.suite("acceptance_testing")
-@allure.suite("regression_testing")
+@allure.id("acceptance_testing")
+@allure.id("regression_testing")
 def test_delete_post_bad_url():
     url = 'http://localhost/wordpress/wp-json/wp/v2/post/new/36'
     id_post = config('ID_POST_405')
@@ -89,8 +89,8 @@ def test_delete_post_bad_url():
 
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
-@allure.suite("acceptance_testing")
-@allure.suite("regression_testing")
+@allure.id("acceptance_testing")
+@allure.id("regression_testing")
 def test_delete_post_bad_id():
     url = config('URL')
     id_post = config('ID_POST_BAD_ID')
@@ -103,9 +103,9 @@ def test_delete_post_bad_id():
 @pytest.mark.acceptance_testing
 @pytest.mark.endtoend_testing
 @pytest.mark.regression_testing
-@allure.suite("acceptance_testing")
-@allure.suite("endtoend_testing")
-@allure.suite("regression_testing")
+@allure.id("acceptance_testing")
+@allure.id("endtoend_testing")
+@allure.id("regression_testing")
 def test_create_and_delete_post():
     url_created = config('URL_CREATED')
     crud_post = CrudPost(TOKEN)
