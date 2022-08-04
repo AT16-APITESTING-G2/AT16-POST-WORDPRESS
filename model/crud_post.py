@@ -27,22 +27,21 @@ class CrudPost:
         return response
 
     def delete_post(self, URL, id_post):
-        url = URL + id_post
+        url = "{}/{}".format(URL, id_post)
 
         response = APIRequest().delete(url, self.headers)
 
-        print(response.text)
         return response
 
     def retrieve_post(self, url, id_post):
 
-        new_url = url + id_post
+        new_url = "{}/{}".format(url, id_post)
 
         response = APIRequest().get(new_url, self.headers)
         return response
 
     def update_post(self, url, id, payload):
-        new_url = url + id
+        new_url = "{}/{}".format(url, id)
         response = APIRequest().post(new_url, payload, self.headers)
         return response
         

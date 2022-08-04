@@ -30,11 +30,20 @@ def load_json_expected_result(path):
     return file_json_dict
 
 
-def setup_module():
-
+@pytest.fixture(autouse=True)
+def setup_prerequisites():
     global TOKEN
+    global ID_POST
 
+    URL = config("URL")
+    payload = load_json_expected_result("resources/resource_retrieve_test/payload_create_post.json")
     TOKEN = Login().get_token()
+    crud_post = CrudPost(TOKEN)
+
+    api_request_response = json.loads((crud_post.create_post(URL, payload)).text)
+    ID_POST = api_request_response['id']
+    yield
+    crud_post.delete_post(URL, ID_POST)
 
 
 @pytest.mark.sanity_testing
@@ -43,7 +52,6 @@ def setup_module():
 def test_retrieve_an_existing_post():
 
     URL = config('URL')
-    ID_POST = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     api_request_response = crud_post.retrieve_post(URL, ID_POST)
@@ -53,7 +61,7 @@ def test_retrieve_an_existing_post():
     assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.OK)
     assert_that(response_text).contains('id')
     assert_that(response_text['id']).is_instance_of(int)
-    assert_that(response_text['id']).is_equal_to(108)
+    assert_that(response_text['id']).is_equal_to(ID_POST)
 
 
 @pytest.mark.security_testing
@@ -62,12 +70,10 @@ def test_retrieve_an_existing_post():
 def test_retrieve_a_post_with_a_bad_token():
 
     URL = config('URL')
-    ID_POST = config('ID_POST')
     TOKEN = "Bearer abc12345"
     crud_post = CrudPost(TOKEN)
 
     api_request_response = crud_post.retrieve_post(URL, ID_POST)
-    print(api_request_response)
     response_text = json.loads(api_request_response.text)
 
     assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.UNAUTHORIZED)
@@ -80,7 +86,7 @@ def test_retrieve_a_post_with_a_bad_token():
 def test_retrieve_a_post_with_a_bad_id():
 
     URL = config('URL')
-    ID_POST = '/900'
+    ID_POST = 900
 
     crud_post = CrudPost(TOKEN)
 
@@ -100,7 +106,6 @@ def test_retrieve_a_post_with_a_bad_id():
 def test_retrieve_a_post_with_a_bad_route():
 
     URL = '{}/bad_route'.format(config('URL'))
-    ID_POST = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
 
@@ -119,7 +124,6 @@ def test_retrieve_a_post_with_a_bad_route():
 @pytest.mark.blackbox_testing
 def test_retrieve_schema_validator():
     URL = config('URL')
-    ID_POST = config('ID_POST')
 
     crud_post = CrudPost(TOKEN)
     api_request_response = crud_post.retrieve_post(URL, ID_POST)
@@ -128,7 +132,7 @@ def test_retrieve_schema_validator():
 
     expected_schema = load_json_expected_result("resources/resource_retrieve_test/schema_retrieve_post.json")
 
-    validator = SchemaValidator(expected_schema, False)
+    validator = SchemaValidator(expected_schema, True)
 
     is_validate = validator.validate(response_text)
     assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.OK)
