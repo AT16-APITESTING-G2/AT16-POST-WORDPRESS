@@ -10,6 +10,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
+
 import allure
 import pytest
 from http import HTTPStatus
@@ -50,12 +51,16 @@ def setup_prerequisites():
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
 @pytest.mark.smoke_testing
+@allure.severity("critical")
 @allure.suite("sanity_testing")
 @allure.suite("acceptance_testing")
-@allure.suite("smoke_testing")
 @allure.suite("regression_testing")
+@allure.suite("smoke_testing")
+@allure.epic("sanity_testing")
+@allure.epic("acceptance_testing")
+@allure.epic("regression_testing")
+@allure.epic("smoke_testing")
 def test_retrieve_an_existing_post():
-
     URL = config('URL')
 
     crud_post = CrudPost(TOKEN)
@@ -72,11 +77,14 @@ def test_retrieve_an_existing_post():
 @pytest.mark.security_testing
 @pytest.mark.sanity_testing
 @pytest.mark.regression_testing
+@allure.severity("critical")
 @allure.suite("security_testing")
 @allure.suite("sanity_testing")
 @allure.suite("regression_testing")
+@allure.epic("security_testing")
+@allure.epic("sanity_testing")
+@allure.epic("regression_testing")
 def test_retrieve_a_post_with_a_bad_token():
-
     URL = config('URL')
     TOKEN = "Bearer abc12345"
     crud_post = CrudPost(TOKEN)
@@ -92,11 +100,14 @@ def test_retrieve_a_post_with_a_bad_token():
 @pytest.mark.sanity_testing
 @pytest.mark.blackbox_testing
 @pytest.mark.regression_testing
+@allure.severity("critical")
 @allure.suite("sanity_testing")
 @allure.suite("blackbox_testing")
 @allure.suite("regression_testing")
+@allure.epic("sanity_testing")
+@allure.epic("blackbox_testing")
+@allure.epic("regression_testing")
 def test_retrieve_a_post_with_a_bad_id():
-
     URL = config('URL')
     ID_POST = 900
 
@@ -116,11 +127,14 @@ def test_retrieve_a_post_with_a_bad_id():
 @pytest.mark.sanity_testing
 @pytest.mark.blackbox_testing
 @pytest.mark.regression_testing
+@allure.severity("critical")
 @allure.suite("sanity_testing")
 @allure.suite("blackbox_testing")
 @allure.suite("regression_testing")
+@allure.epic("sanity_testing")
+@allure.epic("blackbox_testing")
+@allure.epic("regression_testing")
 def test_retrieve_a_post_with_a_bad_route():
-
     URL = '{}/bad_route'.format(config('URL'))
 
     crud_post = CrudPost(TOKEN)
@@ -139,9 +153,13 @@ def test_retrieve_a_post_with_a_bad_route():
 @pytest.mark.sanity_testing
 @pytest.mark.blackbox_testing
 @pytest.mark.regression_testing
+@allure.severity("normal")
 @allure.suite("sanity_testing")
 @allure.suite("blackbox_testing")
 @allure.suite("regression_testing")
+@allure.epic("sanity_testing")
+@allure.epic("blackbox_testing")
+@allure.epic("regression_testing")
 def test_retrieve_schema_validator():
     URL = config('URL')
 
