@@ -13,7 +13,6 @@
 
 import http
 import json
-
 import allure
 import pytest
 from decouple import config
@@ -54,9 +53,16 @@ def load_json_expected_result(path):
 @pytest.mark.acceptance_testing
 @pytest.mark.smoke_testing
 @pytest.mark.regression_testing
+@pytest.mark.sanity_testing
+@allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("smoke_testing")
 @allure.suite("regression_testing")
+@allure.suite("sanity_testing")
+@allure.epic("acceptance_testing")
+@allure.epic("smoke_testing")
+@allure.epic("regression_testing")
+@allure.epic("sanity_testing")
 def test_delete_post():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
@@ -66,9 +72,15 @@ def test_delete_post():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@pytest.mark.security_testing
+@allure.severity("critical")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
-def test_delete_post_status_unauthorized(teardown_delete_test):
+@allure.suite("security_testing")
+@allure.epic("negative_testing")
+@allure.epic("regression_testing")
+@allure.epic("security_testing")
+def test_delete_post_with_bad_token(teardown_delete_test):
     url = config('URL')
     TOKEN = "Bearer abc12345"
     crud_post = CrudPost(TOKEN)
@@ -79,9 +91,12 @@ def test_delete_post_status_unauthorized(teardown_delete_test):
 
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
+@allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
-def test_delete_post_status_void_id(teardown_delete_test):
+@allure.epic("acceptance_testing")
+@allure.epic("regression_testing")
+def test_delete_post_with_void_id(teardown_delete_test):
     url = config('URL')
     id_post = -1
     crud_post = CrudPost(TOKEN)
@@ -92,9 +107,12 @@ def test_delete_post_status_void_id(teardown_delete_test):
 
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
+@allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
-def test_delete_post_bad_url(teardown_delete_test):
+@allure.epic("acceptance_testing")
+@allure.epic("regression_testing")
+def test_delete_post_with_bad_url(teardown_delete_test):
     url = 'http://localhost/bad_database/wp-json/wp/v2/posts'
     crud_post = CrudPost(TOKEN)
     response = crud_post.delete_post(url, ID_POST)
@@ -104,9 +122,12 @@ def test_delete_post_bad_url(teardown_delete_test):
 
 @pytest.mark.acceptance_testing
 @pytest.mark.regression_testing
+@allure.severity("normal")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
-def test_delete_post_bad_id():
+@allure.epic("acceptance_testing")
+@allure.epic("regression_testing")
+def test_delete_post_with_bad_id():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
 
@@ -118,9 +139,16 @@ def test_delete_post_bad_id():
 @pytest.mark.acceptance_testing
 @pytest.mark.endtoend_testing
 @pytest.mark.regression_testing
+@pytest.mark.sanity_testing
+@allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("endtoend_testing")
 @allure.suite("regression_testing")
+@allure.suite("sanity_testing")
+@allure.epic("acceptance_testing")
+@allure.epic("endtoend_testing")
+@allure.epic("regression_testing")
+@allure.epic("sanity_testing")
 def test_create_and_delete_post(teardown_delete_test):
     url_created = config("URL")
     crud_post = CrudPost(TOKEN)

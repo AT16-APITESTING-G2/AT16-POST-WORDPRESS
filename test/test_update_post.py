@@ -10,18 +10,16 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-import json
 
+import json
 import allure
 import pytest
 from http import HTTPStatus
 from assertpy.assertpy import assert_that
 from model.crud_post import CrudPost
 from decouple import config
-
 from model.login import Login
 from test.test_create_post import load_json_expected_result
-from utils.schema_validator import SchemaValidator
 
 
 @pytest.fixture(autouse=True)
@@ -43,9 +41,13 @@ def setup_prerequisites():
 @pytest.mark.acceptance_testing
 @pytest.mark.smoke_testing
 @pytest.mark.regression_testing
-@allure.suite("negative_testing")
+@allure.severity("critical")
+@allure.suite("smoke_testing")
 @allure.suite("regression_testing")
 @allure.suite("acceptance_testing")
+@allure.epic("smoke_testing")
+@allure.epic("regression_testing")
+@allure.epic("acceptance_testing")
 def test_update_post():
     url = config('URL')
 
@@ -61,9 +63,12 @@ def test_update_post():
 
 @pytest.mark.functional_testing
 @pytest.mark.regression_testing
+@allure.severity("minor")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
-def test_update_author_post():
+@allure.epic("functional_testing")
+@allure.epic("regression_testing")
+def test_update_author_post_field():
     url = config('URL')
 
     crud_post = CrudPost(TOKEN)
@@ -78,9 +83,12 @@ def test_update_author_post():
 
 @pytest.mark.functional_testing
 @pytest.mark.regression_testing
+@allure.severity("minor")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
-def test_update_status_post():
+@allure.epic("functional_testing")
+@allure.epic("regression_testing")
+def test_update_status_post_field():
     url = config('URL')
 
     crud_post = CrudPost(TOKEN)
@@ -95,8 +103,11 @@ def test_update_status_post():
 
 @pytest.mark.functional_testing
 @pytest.mark.regression_testing
+@allure.severity("normal")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
+@allure.epic("functional_testing")
+@allure.epic("regression_testing")
 def test_update_comment_status_post():
     url = config('URL')
 
@@ -112,9 +123,12 @@ def test_update_comment_status_post():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@allure.severity("critical")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
-def test_update_invalid_id():
+@allure.epic("negative_testing")
+@allure.epic("regression_testing")
+def test_update_post_with_invalid_id():
     url = config('URL')
     id = 9999999
 
@@ -130,9 +144,12 @@ def test_update_invalid_id():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@allure.severity("minor")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
-def test_update_invalid_status_field():
+@allure.epic("negative_testing")
+@allure.epic("regression_testing")
+def test_update_status_field_with_invalid_value():
     url = config('URL')
 
     crud_post = CrudPost(TOKEN)
@@ -147,9 +164,12 @@ def test_update_invalid_status_field():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@allure.severity("minor")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
-def test_update_invalid_comment_status_field():
+@allure.epic("negative_testing")
+@allure.epic("regression_testing")
+def test_update_comment_status_field_with_invalid_value():
     url = config('URL')
 
     crud_post = CrudPost(TOKEN)
@@ -164,8 +184,11 @@ def test_update_invalid_comment_status_field():
 
 @pytest.mark.negative_testing
 @pytest.mark.regression_testing
+@allure.severity("minor")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
+@allure.epic("negative_testing")
+@allure.epic("regression_testing")
 def test_update_invalid_ping_status_field():
     url = config('URL')
 

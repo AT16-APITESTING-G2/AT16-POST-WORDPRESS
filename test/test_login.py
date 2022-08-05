@@ -10,6 +10,8 @@
 # with Jalasoft.
 #
 
+import pytest
+import allure
 from http import HTTPStatus
 from unittest import TestCase
 from assertpy import assert_that, soft_assertions
@@ -17,6 +19,16 @@ from decouple import config
 from model.login import Login
 
 
+@pytest.mark.sanity_testing
+@pytest.mark.smoke_testing
+@pytest.mark.regression_testing
+@allure.severity("blocker")
+@allure.suite("sanity_testing")
+@allure.suite("regression_testing")
+@allure.suite("smoke_testing")
+@allure.epic("sanity_testing")
+@allure.epic("regression_testing")
+@allure.epic("smoke_testing")
 class TestLogin(TestCase):
     def test_login_success(self):
         URL = config('URI_TOKEN')
