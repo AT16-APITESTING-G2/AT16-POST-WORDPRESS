@@ -1,4 +1,4 @@
-name: Build At16-Compumundohipermegared
+name: Build AT16-APITESTING-G2
 
 on: [push]
 env:
@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    runs-on: aquena-runner
+    runs-on: wordpress-post
 
     steps:
     - name: Checkout
