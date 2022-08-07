@@ -7,10 +7,9 @@ env:
   PASSWORD: ${{ secrets.PASSWORD }}
   URL: ${{ secrets.URL }}
 
-
 jobs:
   build:
-    runs-on: wordpress-post
+    runs-on: aquena-runner
 
     steps:
     - name: Checkout
