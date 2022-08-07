@@ -20,12 +20,15 @@ class Login:
     def login(self, url, user, password):
         _url = url
         headers = {}
+        params = {
+            "mo_rest_api_test_config": "jwt_auth"
+        }
         payload = {
             'username': user,
             'password': password
         }
 
-        response = requests.post(url, data=payload, headers=headers)
+        response = requests.post(url, data=payload, headers=headers, params=params)
 
         return response
 

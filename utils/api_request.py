@@ -25,16 +25,16 @@ class Response:
 
 class APIRequest:
 
-    def get(self, url, headers):
-        response = requests.get(url, headers=headers)
+    def get(self, url, headers, params):
+        response = requests.get(url, headers=headers, params=params)
         return self.__get_responses(response)
 
-    def post(self, url, payload, headers):
-        response = requests.post(url, data=payload, headers=headers)
+    def post(self, url, payload, headers, params):
+        response = requests.post(url, data=payload, headers=headers, params=params)
         return self.__get_responses(response)
 
-    def delete(self, url, headers):
-        response = requests.delete(url, headers=headers)
+    def delete(self, url, headers, params):
+        response = requests.delete(url, headers=headers, params=params)
         return self.__get_responses(response)
 
     def __get_responses(self, response):
