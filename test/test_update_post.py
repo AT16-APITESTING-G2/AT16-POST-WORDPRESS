@@ -48,15 +48,19 @@ def setup_prerequisites():
 @allure.epic("smoke_testing")
 @allure.epic("regression_testing")
 @allure.epic("acceptance_testing")
+@allure.step("Update an exist Post")
+@allure.title("Update post test")
 def test_update_post():
     url = config('URL')
-
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_post.json")
     response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
-
+    # Response log
+    allure.attach(response.text, 'JSON Response', allure.attachment_type.JSON)
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    # Response status code
+    allure.attach(str(response.status_code), 'Status code return', allure.attachment_type.TEXT)
     assert_that(response_text).contains('id')
     assert_that(response_text['id']).is_instance_of(int)
 
