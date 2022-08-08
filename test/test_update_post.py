@@ -48,20 +48,23 @@ def setup_prerequisites():
 @allure.epic("smoke_testing")
 @allure.epic("regression_testing")
 @allure.epic("acceptance_testing")
-@allure.step("Update an exist Post")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-20', name="Verify the response is 200 when a post is update "
+                                                                      "successfully")
 @allure.title("Update post test")
+@allure.step("Update an existing Post")
+@allure.description("This test case is used to update an existing post")
 def test_update_post():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
+    allure.attach(url, 'URL', allure.attachment_type.TEXT)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_post.json")
     response = crud_post.update_post(url, ID_POST, payload)
-    response_text = json.loads(response.response.text)
-    # Response log
-    allure.attach(response.response.text, 'JSON Response', allure.attachment_type.JSON)
-    assert_that(response.response.status_code).is_equal_to(HTTPStatus.OK)
-    # Response status code
-    allure.attach(str(response.response.status_code), 'Status code return', allure.attachment_type.TEXT)
+    response_text = json.loads(response.text)
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response', allure.attachment_type.JSON)
+    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    allure.attach(str(response.status_code), 'Status code return', allure.attachment_type.TEXT)
     assert_that(response_text).contains('id')
+    allure.attach(str(response_text['id']), 'Post id:', allure.attachment_type.TEXT)
     assert_that(response_text['id']).is_instance_of(int)
 
 
@@ -72,16 +75,23 @@ def test_update_post():
 @allure.suite("regression_testing")
 @allure.epic("functional_testing")
 @allure.epic("regression_testing")
-def test_update_author_post_field():
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-32', name="Verify the response is 200 when the author’s "
+                                                                      "post is update successfully")
+@allure.title("Update post author field")
+@allure.step("Update post author field")
+@allure.description("This test case is used to update the author field of an existing post")
+def test_update_post_author_field():
     url = config('URL')
 
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_author_post.json")
     response = crud_post.update_post(url, ID_POST, payload)
-    response_text = json.loads(response.response.text)
-
-    assert_that(response.response.status_code).is_equal_to(HTTPStatus.OK)
+    response_text = json.loads(response.text)
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
+    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    allure.attach(str(response.status_code), 'Status code return:', allure.attachment_type.TEXT)
     assert_that(response_text).contains('author')
+    allure.attach(str(response_text['author']), 'Author id:', allure.attachment_type.TEXT)
     assert_that(response_text['author']).is_instance_of(int)
 
 
@@ -92,6 +102,11 @@ def test_update_author_post_field():
 @allure.suite("regression_testing")
 @allure.epic("functional_testing")
 @allure.epic("regression_testing")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-33', name="Verify the response is 200 when the status' post "
+                                                                      "is update successfully")
+@allure.title("Update post status field")
+@allure.step("Update post status field")
+@allure.description("This test case is used to update the status field of an existing post")
 def test_update_status_post_field():
     url = config('URL')
 
@@ -99,9 +114,11 @@ def test_update_status_post_field():
     payload = load_json_expected_result("resources/resource_update_test/payload_update_status_post.json")
     response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
-
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    allure.attach(str(response.status_code), 'Status code return:', allure.attachment_type.TEXT)
     assert_that(response_text).contains('status')
+    allure.attach(str(response_text['status']), 'Post status:', allure.attachment_type.TEXT)
     assert_that(response_text['status']).is_not_empty()
 
 
@@ -112,6 +129,11 @@ def test_update_status_post_field():
 @allure.suite("regression_testing")
 @allure.epic("functional_testing")
 @allure.epic("regression_testing")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-37', name="Verify the response is 400 and when the comment "
+                                                                      "status value is different  that: open or closed")
+@allure.title("Update comment status post field")
+@allure.step("Update comment status post field")
+@allure.description("This test case is used to update the comment status field of an existing post")
 def test_update_comment_status_post():
     url = config('URL')
 
@@ -119,9 +141,11 @@ def test_update_comment_status_post():
     payload = load_json_expected_result("resources/resource_update_test/payload_update_comment_status_post.json")
     response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
-
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
     assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    allure.attach(str(response.status_code), 'Status code return:', allure.attachment_type.TEXT)
     assert_that(response_text).contains('comment_status')
+    allure.attach(str(response_text['comment_status']), 'Comment status:', allure.attachment_type.TEXT)
     assert_that(response_text['comment_status']).is_not_empty()
 
 
@@ -132,6 +156,12 @@ def test_update_comment_status_post():
 @allure.suite("regression_testing")
 @allure.epic("negative_testing")
 @allure.epic("regression_testing")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-36', name="Verify the response is 400 and code content "
+                                                                       "field is “rest post invalid id“ when the id "
+                                                                       "used is invalid or not exists")
+@allure.title("Update an existing post with an invalid id")
+@allure.step("Update an existing post with an invalid id")
+@allure.description("This is a negative test case that is used to update an existing post with an invalid id")
 def test_update_post_with_invalid_id():
     url = config('URL')
     id = 9999999
@@ -140,9 +170,11 @@ def test_update_post_with_invalid_id():
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_id.json")
     response = crud_post.update_post(url, id, payload)
     response_text = json.loads(response.text)
-
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
     assert_that(response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
+    allure.attach(str(response.status_code), 'Status code return:', allure.attachment_type.TEXT)
     assert_that(response_text).contains('code')
+    allure.attach(str(response_text['code']), 'Response:', allure.attachment_type.TEXT)
     assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
 
 
@@ -153,6 +185,13 @@ def test_update_post_with_invalid_id():
 @allure.suite("regression_testing")
 @allure.epic("negative_testing")
 @allure.epic("regression_testing")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-35', name="Verify the response is 400 and when the status "
+                                                                      "value is different  that: publish, future, "
+                                                                      "draft, pending or private")
+@allure.title("Update status field post with an invalid value")
+@allure.step("Update status field post with an invalid value")
+@allure.description("This is a negative test case that is used to update status field of an existing post with an "
+                    "invalid value. (an invalid value is different than: publish, future, draft, pending or private)")
 def test_update_status_field_with_invalid_value():
     url = config('URL')
 
@@ -160,9 +199,11 @@ def test_update_status_field_with_invalid_value():
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_status_field.json")
     response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
-
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+    allure.attach(str(response.status_code), 'Status code return:', allure.attachment_type.TEXT)
     assert_that(response_text).contains('code')
+    allure.attach(str(response_text['code']), 'Response:', allure.attachment_type.TEXT)
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
@@ -173,6 +214,12 @@ def test_update_status_field_with_invalid_value():
 @allure.suite("regression_testing")
 @allure.epic("negative_testing")
 @allure.epic("regression_testing")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-34', name="Verify the response is 200 when the comment "
+                                                                       "status post is update successfully")
+@allure.title("Update comment status field post with an invalid value")
+@allure.step("Update comment status field post with an invalid value")
+@allure.description("This is a negative test case that is used to update comment status field of an existing post with "
+                    "an invalid value. (an invalid value is different than: open, closed)")
 def test_update_comment_status_field_with_invalid_value():
     url = config('URL')
 
@@ -180,9 +227,11 @@ def test_update_comment_status_field_with_invalid_value():
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_status_field.json")
     response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
-
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+    allure.attach(str(response.status_code), 'Status code return:', allure.attachment_type.TEXT)
     assert_that(response_text).contains('code')
+    allure.attach(str(response_text['code']), 'Response:', allure.attachment_type.TEXT)
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
@@ -193,6 +242,12 @@ def test_update_comment_status_field_with_invalid_value():
 @allure.suite("regression_testing")
 @allure.epic("negative_testing")
 @allure.epic("regression_testing")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-38', name="Verify the response is 400 and when the ping "
+                                                                      "status value is different that: open or closed")
+@allure.title("Update ping status field post with an invalid value")
+@allure.step("Update ping status field post with an invalid value")
+@allure.description("This is a negative test case that is used to update ping status field of an existing post with "
+                    "an invalid value. (an invalid value is different than: open, closed)")
 def test_update_invalid_ping_status_field():
     url = config('URL')
 
@@ -200,7 +255,9 @@ def test_update_invalid_ping_status_field():
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_ping_status_field.json")
     response = crud_post.update_post(url, ID_POST, payload)
     response_text = json.loads(response.text)
-
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
     assert_that(response.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+    allure.attach(str(response.status_code), 'Status code return:', allure.attachment_type.TEXT)
     assert_that(response_text).contains('code')
+    allure.attach(str(response_text['code']), 'Response:', allure.attachment_type.TEXT)
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
