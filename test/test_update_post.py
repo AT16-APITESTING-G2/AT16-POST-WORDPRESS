@@ -32,7 +32,7 @@ def setup_prerequisites():
     TOKEN = Login().get_token()
     crud_post = CrudPost(TOKEN)
 
-    api_request_response = json.loads((crud_post.create_post(URL, payload)).text)
+    api_request_response = json.loads((crud_post.create_post(URL, payload)).response.text)
     ID_POST = api_request_response['id']
     yield
     crud_post.delete_post(URL, ID_POST)
