@@ -32,7 +32,7 @@ def setup_prerequisites():
     TOKEN = Login().get_token()
     crud_post = CrudPost(TOKEN)
 
-    api_request_response = json.loads((crud_post.create_post(URL, payload)).text)
+    api_request_response = json.loads((crud_post.create_post(URL, payload)).response.text)
     ID_POST = api_request_response['id']
     yield
     crud_post.delete_post(URL, ID_POST)
@@ -55,12 +55,12 @@ def test_update_post():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_post.json")
     response = crud_post.update_post(url, ID_POST, payload)
-    response_text = json.loads(response.text)
+    response_text = json.loads(response.response.text)
     # Response log
-    allure.attach(response.text, 'JSON Response', allure.attachment_type.JSON)
-    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    allure.attach(response.response.text, 'JSON Response', allure.attachment_type.JSON)
+    assert_that(response.response.status_code).is_equal_to(HTTPStatus.OK)
     # Response status code
-    allure.attach(str(response.status_code), 'Status code return', allure.attachment_type.TEXT)
+    allure.attach(str(response.response.status_code), 'Status code return', allure.attachment_type.TEXT)
     assert_that(response_text).contains('id')
     assert_that(response_text['id']).is_instance_of(int)
 
@@ -78,9 +78,9 @@ def test_update_author_post_field():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_author_post.json")
     response = crud_post.update_post(url, ID_POST, payload)
-    response_text = json.loads(response.text)
+    response_text = json.loads(response.response.text)
 
-    assert_that(response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(response.response.status_code).is_equal_to(HTTPStatus.OK)
     assert_that(response_text).contains('author')
     assert_that(response_text['author']).is_instance_of(int)
 

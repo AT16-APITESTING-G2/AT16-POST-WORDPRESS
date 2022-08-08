@@ -117,7 +117,7 @@ def test_delete_post_with_bad_url(teardown_delete_test):
     crud_post = CrudPost(TOKEN)
     response = crud_post.delete_post(url, ID_POST)
 
-    assert_that(response.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
+    assert_that(response.status_code).is_equal_to(http.HTTPStatus.METHOD_NOT_ALLOWED)
 
 
 @pytest.mark.acceptance_testing
