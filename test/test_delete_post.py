@@ -31,7 +31,7 @@ def setup_prerequisites():
     TOKEN = Login().get_token()
     crud_post = CrudPost(TOKEN)
 
-    api_request_response = json.loads((crud_post.create_post(URL, payload)).text)
+    api_request_response = json.loads((crud_post.create_post(URL, payload)).response.text)
     ID_POST = api_request_response['id']
 
 
@@ -67,7 +67,7 @@ def test_delete_post():
     url = config('URL')
     crud_post = CrudPost(TOKEN)
     response = crud_post.delete_post(url, ID_POST)
-    assert_that(response.status_code).is_equal_to(http.HTTPStatus.OK)
+    assert_that(response.response.status_code).is_equal_to(http.HTTPStatus.OK)
 
 
 @pytest.mark.negative_testing
@@ -86,7 +86,7 @@ def test_delete_post_with_bad_token(teardown_delete_test):
     crud_post = CrudPost(TOKEN)
 
     response_str_void = crud_post.delete_post(url, ID_POST)
-    assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.UNAUTHORIZED)
+    assert_that(response_str_void.response.status_code).is_equal_to(http.HTTPStatus.UNAUTHORIZED)
 
 
 @pytest.mark.acceptance_testing
@@ -102,7 +102,7 @@ def test_delete_post_with_void_id(teardown_delete_test):
     crud_post = CrudPost(TOKEN)
 
     response_str_void = crud_post.delete_post(url, id_post)
-    assert_that(response_str_void.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
+    assert_that(response_str_void.response.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
 
 
 @pytest.mark.acceptance_testing
@@ -117,7 +117,7 @@ def test_delete_post_with_bad_url(teardown_delete_test):
     crud_post = CrudPost(TOKEN)
     response = crud_post.delete_post(url, ID_POST)
 
-    assert_that(response.status_code).is_equal_to(http.HTTPStatus.METHOD_NOT_ALLOWED)
+    assert_that(response.response.status_code).is_equal_to(http.HTTPStatus.NOT_FOUND)
 
 
 @pytest.mark.acceptance_testing
@@ -133,7 +133,7 @@ def test_delete_post_with_bad_id():
 
     crud_post.delete_post(url, ID_POST)
     second_response = crud_post.delete_post(url, ID_POST)
-    assert_that(second_response.status_code).is_equal_to(http.HTTPStatus.GONE)
+    assert_that(second_response.response.status_code).is_equal_to(http.HTTPStatus.GONE)
 
 
 @pytest.mark.acceptance_testing
@@ -154,9 +154,9 @@ def test_create_and_delete_post(teardown_delete_test):
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_delete_test/payload_delete_post.json")
     response = crud_post.create_post(url_created, payload)
-    assert_that(response.status_code).is_equal_to(http.HTTPStatus.CREATED)
+    assert_that(response.response.status_code).is_equal_to(http.HTTPStatus.CREATED)
 
     url = config('URL')
-    id_response = json.loads(response.text)['id']
+    id_response = json.loads(response.response.text)['id']
     response_deleted = crud_post.delete_post(url, id_response)
-    assert_that(response_deleted.status_code).is_equal_to(http.HTTPStatus.OK)
+    assert_that(response_deleted.response.status_code).is_equal_to(http.HTTPStatus.OK)
