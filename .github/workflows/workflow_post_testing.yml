@@ -1,4 +1,4 @@
-name: Build AT16-APITESTING-G2
+name: Build AT16-COMPUMUNDOHIPERMEGARED
 
 on: [push]
 env:
