@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    runs-on: ajurado-wordpress-post
+    runs-on: aquena-runner
 
     steps:
     - name: Checkout
