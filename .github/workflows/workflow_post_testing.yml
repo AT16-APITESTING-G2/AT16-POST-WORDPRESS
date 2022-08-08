@@ -29,5 +29,5 @@ jobs:
     - name: Execute Test
       run: |
         echo "$PWD"
-        cd ~/test
+        cd test
         python3 -m pytest
