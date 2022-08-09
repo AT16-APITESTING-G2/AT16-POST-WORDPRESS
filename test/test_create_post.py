@@ -211,3 +211,4 @@ def test_create_post_with_invalid_author_id():
     allure.attach(str(response_text['message']), 'Message to invalid author', allure.attachment_type.TEXT)
     allure.attach(str(response.request.url), 'URL', allure.attachment_type.TEXT)
     allure.attach(str(response.request.method), 'Method', allure.attachment_type.TEXT)
+
