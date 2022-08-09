@@ -12,7 +12,7 @@ Preconditions:
 
 For windows users:
 - Open the Powershell terminal, and enter the next commands:
-    - Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
+    - Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
     - irm get.scoop.sh | iex
     - scoop install allure
 
