@@ -113,9 +113,9 @@ def test_retrieve_a_post_with_a_bad_id():
 
     api_request_response = crud_post.retrieve_post(URL, ID_POST)
 
-    response_text = json.loads(api_request_response.text)
+    response_text = json.loads(api_request_response.response.text)
 
-    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
+    assert_that(api_request_response.response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
     assert_that(response_text).contains('code')
     assert_that(response_text['code']).is_equal_to('rest_post_invalid_id')
     assert_that(response_text).contains('message')

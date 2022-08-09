@@ -47,4 +47,3 @@ class CrudPost:
         new_url = "{}/{}".format(url, id)
         response = APIRequest().post(new_url, payload, self.headers, self.params)
         return response
-        
