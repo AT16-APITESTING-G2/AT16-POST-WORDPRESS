@@ -41,7 +41,7 @@ def setup_prerequisites():
     TOKEN = Login().get_token()
     crud_post = CrudPost(TOKEN)
 
-    api_request_response = json.loads((crud_post.create_post(URL, payload)).text)
+    api_request_response = json.loads((crud_post.create_post(URL, payload)).response.text)
     ID_POST = api_request_response['id']
     yield
     crud_post.delete_post(URL, ID_POST)
@@ -64,11 +64,9 @@ def test_retrieve_an_existing_post():
     URL = config('URL')
 
     crud_post = CrudPost(TOKEN)
-    api_request_response = crud_post.retrieve_post(URL, ID_POST)
-
-    response_text = json.loads(api_request_response.text)
-
-    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.OK)
+    api = crud_post.retrieve_post(URL, ID_POST)
+    response_text = json.loads(api.response.text)
+    assert_that(api.response.status_code).is_equal_to(HTTPStatus.OK)
     assert_that(response_text).contains('id')
     assert_that(response_text['id']).is_instance_of(int)
     assert_that(response_text['id']).is_equal_to(ID_POST)
@@ -89,10 +87,10 @@ def test_retrieve_a_post_with_a_bad_token():
     TOKEN = "Bearer abc12345"
     crud_post = CrudPost(TOKEN)
 
-    api_request_response = crud_post.retrieve_post(URL, ID_POST)
-    response_text = json.loads(api_request_response.text)
+    api = crud_post.retrieve_post(URL, ID_POST)
+    response_text = json.loads(api.response.text)
 
-    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.UNAUTHORIZED)
+    assert_that(api.response.status_code).is_equal_to(HTTPStatus.UNAUTHORIZED)
     assert_that(response_text).contains('code')
     assert_that(response_text['code']).is_equal_to('401')
 
@@ -115,9 +113,9 @@ def test_retrieve_a_post_with_a_bad_id():
 
     api_request_response = crud_post.retrieve_post(URL, ID_POST)
 
-    response_text = json.loads(api_request_response.text)
+    response_text = json.loads(api_request_response.response.text)
 
-    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
+    assert_that(api_request_response.response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
     assert_that(response_text).contains('code')
     assert_that(response_text['code']).is_equal_to('rest_post_invalid_id')
     assert_that(response_text).contains('message')
@@ -139,11 +137,11 @@ def test_retrieve_a_post_with_a_bad_route():
 
     crud_post = CrudPost(TOKEN)
 
-    api_request_response = crud_post.retrieve_post(URL, ID_POST)
+    api = crud_post.retrieve_post(URL, ID_POST)
 
-    response_text = json.loads(api_request_response.text)
+    response_text = json.loads(api.response.text)
 
-    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
+    assert_that(api.response.status_code).is_equal_to(HTTPStatus.NOT_FOUND)
     assert_that(response_text).contains('code')
     assert_that(response_text['code']).is_equal_to('rest_no_route')
     assert_that(response_text).contains('message')
@@ -164,14 +162,14 @@ def test_retrieve_schema_validator():
     URL = config('URL')
 
     crud_post = CrudPost(TOKEN)
-    api_request_response = crud_post.retrieve_post(URL, ID_POST)
+    api = crud_post.retrieve_post(URL, ID_POST)
 
-    response_text = json.loads(api_request_response.text)
+    response_text = json.loads(api.response.text)
 
     expected_schema = load_json_expected_result("resources/resource_retrieve_test/schema_retrieve_post.json")
 
     validator = SchemaValidator(expected_schema, True)
 
     is_validate = validator.validate(response_text)
-    assert_that(api_request_response.status_code).is_equal_to(HTTPStatus.OK)
+    assert_that(api.response.status_code).is_equal_to(HTTPStatus.OK)
     assert_that(is_validate).is_true()

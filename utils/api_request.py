@@ -14,35 +14,88 @@
 from dataclasses import dataclass
 import requests
 
+import requests
+from requests import Request
+
 
 @dataclass
-class Response:
+class RequestApi:
+    url: str
+    method: str
+    as_dict: dict
+    headers: dict
+
+
+@dataclass
+class ResponseApi:
     status_code: int
     text: str
     as_dict: object
     headers: dict
+    url: str
+
+
+@dataclass
+class Api:
+    request: RequestApi
+    response: ResponseApi
 
 
 class APIRequest:
 
-    def get(self, url, headers):
-        response = requests.get(url, headers=headers)
-        return self.__get_responses(response)
+    def get(self, url, headers, params):
+        request = requests.Request(method="GET", url=url, headers=headers, params=params)
+        request_prepared = request.prepare()
 
-    def post(self, url, payload, headers):
-        response = requests.post(url, data=payload, headers=headers)
-        return self.__get_responses(response)
+        request_api = self.get_requests(request_prepared)
+        response = requests.Session().send(request_prepared)
+        response_api = self.__get_responses(response)
+        return self.__get_apis(request_api, response_api)
 
-    def delete(self, url, headers):
-        response = requests.delete(url, headers=headers)
-        return self.__get_responses(response)
+    def post(self, url, payload, headers, params):
+        request = requests.Request(method="POST", url=url, data=payload,
+                                   headers=headers, params=params)
+        request_prepared = request.prepare()
+
+        request_api = self.get_requests(request_prepared)
+        response = requests.Session().send(request_prepared)
+        response_api = self.__get_responses(response)
+        return self.__get_apis(request_api, response_api)
+
+    def delete(self, url, headers, params):
+        request = requests.Request(method="DELETE", url=url, headers=headers, params=params)
+        request_prepared = request.prepare()
+
+        request_api = self.get_requests(request_prepared)
+        response = requests.Session().send(request_prepared)
+        response_api = self.__get_responses(response)
+        return self.__get_apis(request_api, response_api)
 
     def __get_responses(self, response):
+        url_response = response.url
         status_code = response.status_code
-        text = response.text
+        text_response = response.text
         try:
-            as_dict = response.json()
+            as_dict_response = response.json()
         except Exception:
-            as_dict = {}
-        headers = response.headers
-        return Response(status_code, text, as_dict, headers)
+            as_dict_response = {}
+        headers_response = response.headers
+        return ResponseApi(status_code, text_response, as_dict_response,
+                                   headers_response, url_response)
+
+
+    def get_requests(self, request_prepared):
+
+        url_request = request_prepared.url
+        method_request = request_prepared.method
+        headers_request = request_prepared.headers
+        try:
+            as_dict_request = request_prepared.json()
+        except Exception:
+            as_dict_request = {}
+
+        return RequestApi(url_request, method_request, as_dict_request,
+                                 headers_request)
+
+    def __get_apis(self, request_api, response_api):
+        return Api(request_api, response_api)
