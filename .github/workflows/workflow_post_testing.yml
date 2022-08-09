@@ -3,15 +3,19 @@ name: Build AT16-Api-Testing-G2
 on:
   workflow_dispatch:
     inputs:
-      reports:
-        description: 'Generate the next report test'
+      reason:
+        description: 'Generate with the next report test'
         required: true
-        type: choice
-        options:
-          - Regression Test
-          - Smoke Test
-          - Acceptance Test
-          - Negative Test
+
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
 
 env:
   URI_TOKEN: ${{ secrets.URI_TOKEN }}
