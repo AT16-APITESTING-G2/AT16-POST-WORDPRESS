@@ -112,7 +112,6 @@ def test_delete_post_with_bad_token(teardown_delete_test):
     }
     allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     response_text = json.loads(response_bad_id.response.text)
-    print(response_text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response', allure.attachment_type.JSON)
     allure.attach(str(response_bad_id.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
