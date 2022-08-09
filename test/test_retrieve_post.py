@@ -143,7 +143,7 @@ def test_retrieve_a_post_with_a_bad_token():
 @allure.description("Verify that the Post end point return the 404 status code with a bad id")
 def test_retrieve_a_post_with_a_bad_id():
     URL = config('URL')
-    ID_POST = 9999999
+    ID_POST = -1
     payload = {}
     crud_post = CrudPost(TOKEN)
 
@@ -162,9 +162,7 @@ def test_retrieve_a_post_with_a_bad_id():
     allure.attach(str(api.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
     assert_that(response_text).contains('code')
-    assert_that(response_text['code']).is_equal_to('rest_post_invalid_id')
     assert_that(response_text).contains('message')
-    assert_that(response_text['message']).is_equal_to('Invalid post ID.')
 
 
 @pytest.mark.sanity_testing
