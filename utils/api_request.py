@@ -14,9 +14,6 @@
 from dataclasses import dataclass
 import requests
 
-import requests
-from requests import Request
-
 
 @dataclass
 class RequestApi:
@@ -80,9 +77,7 @@ class APIRequest:
         except Exception:
             as_dict_response = {}
         headers_response = response.headers
-        return ResponseApi(status_code, text_response, as_dict_response,
-                                   headers_response, url_response)
-
+        return ResponseApi(status_code, text_response, as_dict_response, headers_response, url_response)
 
     def get_requests(self, request_prepared):
 
@@ -94,8 +89,7 @@ class APIRequest:
         except Exception:
             as_dict_request = {}
 
-        return RequestApi(url_request, method_request, as_dict_request,
-                                 headers_request)
+        return RequestApi(url_request, method_request, as_dict_request, headers_request)
 
     def __get_apis(self, request_api, response_api):
         return Api(request_api, response_api)
