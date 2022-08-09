@@ -203,7 +203,6 @@ def test_retrieve_a_post_with_a_bad_route():
 
 
 @pytest.mark.sanity_testing
-@pytest.mark.blackbox_testing
 @pytest.mark.regression_testing
 @allure.severity("normal")
 @allure.suite("sanity_testing")
@@ -211,7 +210,6 @@ def test_retrieve_a_post_with_a_bad_route():
 @allure.suite("blackbox_testing")
 @allure.epic("sanity_testing")
 @allure.epic("regression_testing")
-@allure.epic("blackbox_testing")
 @allure.link('https://apitestpost16.atlassian.net/browse/AP-27',
              name="https://apitestpost16.atlassian.net/browse/AP-27")
 @allure.title("Validate the schema of Retrieve Post")
