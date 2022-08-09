@@ -3,7 +3,7 @@ name: Build AT16-Api-Testing-G2
 on:
   workflow_dispatch:
     inputs:
-      reports:
+      reason:
         description: 'Generate with the next report test'
         required: true
         type: choice
@@ -17,11 +17,7 @@ on:
     branches:
       - main
       - develop
-
-  pull_request:
-    branches:
-      - main
-      - develop
+      - feature/**
 
 env:
   URI_TOKEN: ${{ secrets.URI_TOKEN }}
