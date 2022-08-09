@@ -52,8 +52,8 @@ def setup_prerequisites():
 @allure.epic("smoke_testing")
 @allure.epic("regression_testing")
 @allure.epic("acceptance_testing")
-@allure.link('https://apitestpost16.atlassian.net/browse/AP-20', name="Verify the response is 200 when a post is update "
-                                                                      "successfully")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-20', name="Verify the response is 200 when a post is "
+                                                                      "update successfully")
 @allure.title("Update post test")
 @allure.step("Update an existing Post")
 @allure.description("This test case is used to update an existing post")
@@ -63,9 +63,12 @@ def test_update_post():
 
     payload = load_json_expected_result("resources/resource_update_test/payload_update_post.json")
     api = crud_post.update_post(url, ID_POST, payload)
-    allure.attach(str(api.request.url), 'URL', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.method), 'Method', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.headers['Authorization']), 'Authorization', allure.attachment_type.TEXT)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response', allure.attachment_type.JSON)
@@ -81,8 +84,10 @@ def test_update_post():
 @allure.severity("minor")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
+@allure.suite("acceptance_testing")
 @allure.epic("functional_testing")
 @allure.epic("regression_testing")
+@allure.epic("acceptance_testing")
 @allure.link('https://apitestpost16.atlassian.net/browse/AP-32', name="Verify the response is 200 when the author’s "
                                                                       "post is update successfully")
 @allure.title("Update post author field")
@@ -94,9 +99,12 @@ def test_update_post_author_field():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_author_post.json")
     api = crud_post.update_post(url, ID_POST, payload)
-    allure.attach(str(api.request.url), 'URL', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.method), 'Method', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.headers['Authorization']), 'Authorization', allure.attachment_type.TEXT)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
@@ -112,10 +120,12 @@ def test_update_post_author_field():
 @allure.severity("minor")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
+@allure.suite("acceptance_testing")
 @allure.epic("functional_testing")
 @allure.epic("regression_testing")
-@allure.link('https://apitestpost16.atlassian.net/browse/AP-33', name="Verify the response is 200 when the status' post "
-                                                                      "is update successfully")
+@allure.epic("acceptance_testing")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-33', name="Verify the response is 200 when the status "
+                                                                      "post is update successfully")
 @allure.title("Update post status field")
 @allure.step("Update post status field")
 @allure.description("This test case is used to update the status field of an existing post")
@@ -125,9 +135,12 @@ def test_update_status_post_field():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_status_post.json")
     api = crud_post.update_post(url, ID_POST, payload)
-    allure.attach(str(api.request.url), 'URL', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.method), 'Method', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.headers['Authorization']), 'Authorization', allure.attachment_type.TEXT)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
@@ -143,8 +156,10 @@ def test_update_status_post_field():
 @allure.severity("normal")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
+@allure.suite("acceptance_testing")
 @allure.epic("functional_testing")
 @allure.epic("regression_testing")
+@allure.epic("acceptance_testing")
 @allure.link('https://apitestpost16.atlassian.net/browse/AP-37', name="Verify the response is 400 and when the comment "
                                                                       "status value is different  that: open or closed")
 @allure.title("Update comment status post field")
@@ -156,9 +171,12 @@ def test_update_comment_status_post():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_comment_status_post.json")
     api = crud_post.update_post(url, ID_POST, payload)
-    allure.attach(str(api.request.url), 'URL', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.method), 'Method', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.headers['Authorization']), 'Authorization', allure.attachment_type.TEXT)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
@@ -189,9 +207,12 @@ def test_update_post_with_invalid_id():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_id.json")
     api = crud_post.update_post(url, id, payload)
-    allure.attach(str(api.request.url), 'URL', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.method), 'Method', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.headers['Authorization']), 'Authorization', allure.attachment_type.TEXT)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
@@ -222,9 +243,12 @@ def test_update_status_field_with_invalid_value():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_status_field.json")
     api = crud_post.update_post(url, ID_POST, payload)
-    allure.attach(str(api.request.url), 'URL', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.method), 'Method', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.headers['Authorization']), 'Authorization', allure.attachment_type.TEXT)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
@@ -254,9 +278,12 @@ def test_update_comment_status_field_with_invalid_value():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_status_field.json")
     api = crud_post.update_post(url, ID_POST, payload)
-    allure.attach(str(api.request.url), 'URL', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.method), 'Method', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.headers['Authorization']), 'Authorization', allure.attachment_type.TEXT)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
@@ -286,9 +313,12 @@ def test_update_invalid_ping_status_field():
     crud_post = CrudPost(TOKEN)
     payload = load_json_expected_result("resources/resource_update_test/payload_update_invalid_ping_status_field.json")
     api = crud_post.update_post(url, ID_POST, payload)
-    allure.attach(str(api.request.url), 'URL', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.method), 'Method', allure.attachment_type.TEXT)
-    allure.attach(str(api.request.headers['Authorization']), 'Authorization', allure.attachment_type.TEXT)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)
     allure.attach(json.dumps(response_text, indent=4), 'JSON Response:', allure.attachment_type.JSON)
@@ -297,3 +327,43 @@ def test_update_invalid_ping_status_field():
     assert_that(response_text).contains('code')
     allure.attach(str(response_text['code']), 'Response:', allure.attachment_type.TEXT)
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
+
+
+@pytest.mark.security_testing
+@pytest.mark.sanity_testing
+@pytest.mark.regression_testing
+@allure.severity("critical")
+@allure.suite("security_testing")
+@allure.suite("sanity_testing")
+@allure.suite("regression_testing")
+@allure.suite("negative_testing")
+@allure.epic("security_testing")
+@allure.epic("sanity_testing")
+@allure.epic("regression_testing")
+@allure.epic("negative_testing")
+@allure.link('https://apitestpost16.atlassian.net/browse/AP-48', name="Verify the response is 401 and when the post "
+                                                                      "is update with an invalid token")
+@allure.title("Update ping status field post with an invalid value")
+@allure.step("Steps update ping status field post with an invalid value")
+@allure.description("This is a negative test case that is used to update  an existing post with an invalid token.")
+def test_update_post_with_a_bad_token():
+    url = config('URL')
+    token = "Bearer abc12345"
+    crud_post = CrudPost(token)
+
+    payload = load_json_expected_result("resources/resource_update_test/payload_update_post.json")
+    api = crud_post.update_post(url, ID_POST, payload)
+    headers = {
+        "Url": str(api.request.url),
+        "Method": str(api.request.method),
+        "Authorization": str(api.request.headers['Authorization'])
+    }
+    allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
+    allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
+    response_text = json.loads(api.response.text)
+    allure.attach(json.dumps(response_text, indent=4), 'JSON Response', allure.attachment_type.JSON)
+    assert_that(api.response.status_code).is_equal_to(HTTPStatus.UNAUTHORIZED)
+    allure.attach(str(api.response.status_code), 'Status code return', allure.attachment_type.TEXT)
+    assert_that(response_text).contains('code')
+    allure.attach(str(response_text['code']), 'Code assert', allure.attachment_type.TEXT)
+    assert_that(response_text['code']).is_equal_to('401')
