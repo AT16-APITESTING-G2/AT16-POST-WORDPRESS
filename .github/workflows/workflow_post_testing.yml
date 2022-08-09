@@ -6,16 +6,18 @@ on:
       reason:
         description: 'Generate with the next report test'
         required: true
+        type: choice
+        options:
+          - Regression Test
+          - Smoke Test
+          - Acceptance Test
+          - Negative Test
 
   push:
     branches:
       - main
       - develop
-
-  pull_request:
-    branches:
-      - main
-      - develop
+      - feature/**
 
 env:
   URI_TOKEN: ${{ secrets.URI_TOKEN }}
