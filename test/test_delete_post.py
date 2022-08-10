@@ -189,11 +189,9 @@ def test_delete_post_with_bad_id():
 
 @allure.severity("critical")
 @allure.suite("acceptance_testing")
-@allure.suite("endtoend_testing")
 @allure.suite("regression_testing")
 @allure.suite("sanity_testing")
 @allure.epic("acceptance_testing")
-@allure.epic("endtoend_testing")
 @allure.epic("regression_testing")
 @allure.epic("sanity_testing")
 @allure.title("delete post create and delete test")
