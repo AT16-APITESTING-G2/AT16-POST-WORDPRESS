@@ -13,7 +13,6 @@
 import pytest
 import allure
 from http import HTTPStatus
-
 from assertpy import assert_that, soft_assertions
 from decouple import config
 from model.login import Login
@@ -56,15 +55,16 @@ def test_login_success():
     allure.attach(response_login.json()['jwt_token'], 'Jwt token', allure.attachment_type.TEXT)
     assert_that(response_login.json()['jwt_token']).is_not_empty()
 
+
 @allure.severity("blocker")
 @allure.suite("sanity_testing")
 @allure.suite("regression_testing")
 @allure.suite("smoke_testing")
-@allure.suite("acceptance_testing")
+@allure.suite("negative_testing")
 @allure.epic("sanity_testing")
 @allure.epic("regression_testing")
 @allure.epic("smoke_testing")
-@allure.epic("acceptance_testing")
+@allure.epic("negative_testing")
 @allure.title("Login test case with a bad user name")
 @allure.step("Login test case with a bad user name")
 @allure.description("This test case is used to verify that user cannot login with a bad user name")
@@ -75,20 +75,20 @@ def test_login_with_bad_user_name():
 
     user_login = Login()
 
-    response_login = user_login.login(URL, "USER_NAME", PASSWORD)
+    response_login = user_login.login(URL, "BAD_USER_NAME", PASSWORD)
 
-    with soft_assertions():
-        assert_that(response_login.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+    assert_that(response_login.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+
 
 @allure.severity("blocker")
 @allure.suite("sanity_testing")
 @allure.suite("regression_testing")
 @allure.suite("smoke_testing")
-@allure.suite("acceptance_testing")
+@allure.suite("negative_testing")
 @allure.epic("sanity_testing")
 @allure.epic("regression_testing")
 @allure.epic("smoke_testing")
-@allure.epic("acceptance_testing")
+@allure.epic("negative_testing")
 @allure.title("Login test case with a bad password")
 @allure.step("Login test case with a bad password")
 @allure.description("This test case is used to verify that user cannot login with a bad password")
@@ -99,7 +99,6 @@ def test_login_with_bad_password():
 
     user_login = Login()
 
-    response_login = user_login.login(URL, USER_NAME, "PASSWORD")
+    response_login = user_login.login(URL, USER_NAME, "BAD_PASSWORD")
 
-    with soft_assertions():
-        assert_that(response_login.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
+    assert_that(response_login.status_code).is_equal_to(HTTPStatus.BAD_REQUEST)
