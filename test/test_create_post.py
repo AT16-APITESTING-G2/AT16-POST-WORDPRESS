@@ -198,7 +198,6 @@ def test_create_post_with_void_title():
     assert_that(api.response.status_code).is_equal_to(http.HTTPStatus.BAD_REQUEST)
     allure.attach(str(api.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
-@pytest.mark.sanity_testing
 @allure.severity("critical")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
