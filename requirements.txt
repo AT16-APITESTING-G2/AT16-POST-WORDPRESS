@@ -9,6 +9,7 @@ certifi==2022.6.15
 charset-normalizer==2.1.0
 colorama==0.4.5
 config==0.5.1
+coverage==6.4.3
 delayed-assert==0.3.6
 dill==0.3.5.1
 idna==3.3
