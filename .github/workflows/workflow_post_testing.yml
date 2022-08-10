@@ -3,7 +3,7 @@ name: Build AT16-Api-Testing-G2
 on:
   workflow_dispatch:
     inputs:
-      reason:
+      reports:
         description: 'Generate report test'
         required: true
         type: choice
