@@ -19,9 +19,6 @@ from decouple import config
 from model.login import Login
 
 
-@pytest.mark.sanity_testing
-@pytest.mark.smoke_testing
-@pytest.mark.regression_testing
 @allure.severity("blocker")
 @allure.suite("sanity_testing")
 @allure.suite("regression_testing")

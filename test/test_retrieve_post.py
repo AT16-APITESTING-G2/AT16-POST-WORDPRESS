@@ -50,10 +50,7 @@ def setup_prerequisites():
     crud_post.delete_post(URL, ID_POST)
     allure.attach(str(ID_POST), 'ID post deleted:', allure.attachment_type.TEXT)
 
-@pytest.mark.sanity_testing
-@pytest.mark.acceptance_testing
-@pytest.mark.regression_testing
-@pytest.mark.smoke_testing
+
 @allure.severity("critical")
 @allure.suite("sanity_testing")
 @allure.suite("acceptance_testing")
@@ -90,9 +87,6 @@ def test_retrieve_an_existing_post():
     allure.attach(str(response_text['id']), 'Post id:', allure.attachment_type.TEXT)
 
 
-@pytest.mark.security_testing
-@pytest.mark.sanity_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("security_testing")
 @allure.suite("sanity_testing")
@@ -127,9 +121,6 @@ def test_retrieve_a_post_with_a_bad_token():
     allure.attach(str(api.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
 
-@pytest.mark.sanity_testing
-@pytest.mark.blackbox_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("sanity_testing")
 @allure.suite("regression_testing")
@@ -165,9 +156,6 @@ def test_retrieve_a_post_with_a_bad_id():
     assert_that(response_text).contains('message')
 
 
-@pytest.mark.sanity_testing
-@pytest.mark.blackbox_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("sanity_testing")
 @allure.suite("regression_testing")
@@ -202,8 +190,6 @@ def test_retrieve_a_post_with_a_bad_route():
     assert_that(response_text['message']).is_equal_to('No route was found matching the URL and request method.')
 
 
-@pytest.mark.sanity_testing
-@pytest.mark.regression_testing
 @allure.severity("normal")
 @allure.suite("sanity_testing")
 @allure.suite("regression_testing")
