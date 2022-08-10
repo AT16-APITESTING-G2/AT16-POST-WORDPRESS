@@ -50,12 +50,6 @@ jobs:
         cd test
         python3 -m pytest
 
-    - name: Generate Coverage
-      run: |
-        cd test
-        python3 -m coverage run -m pytest
-        python3 -m coverage report
-
     - name: Generate Report Test
       run: |
         echo ${{ github.event.inputs.reports }}
