@@ -53,3 +53,6 @@ jobs:
     - name: Generate Report Test
       run: |
         echo ${{ github.event.inputs.reports }}
+        cd test
+        py.test --alluredir=general_report .
+        allure serve .\general_report
