@@ -52,6 +52,7 @@ jobs:
 
     - name: Generate Coverage
       run: |
+        cd test
         python3 -m coverage run -m pytest
         python3 -m coverage report
 
