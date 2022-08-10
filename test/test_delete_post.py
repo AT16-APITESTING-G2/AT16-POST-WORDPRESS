@@ -53,10 +53,6 @@ def load_json_expected_result(path):
     return file_json_dict
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.smoke_testing
-@pytest.mark.regression_testing
-@pytest.mark.sanity_testing
 @allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("smoke_testing")
@@ -85,9 +81,7 @@ def test_delete_post():
     allure.attach(str(response.response.status_code), 'Status code return', allure.attachment_type.TEXT)
     allure.attach(str(response_text['id']), 'Id deleted:', allure.attachment_type.TEXT)
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
-@pytest.mark.security_testing
+
 @allure.severity("critical")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
@@ -116,8 +110,6 @@ def test_delete_post_with_bad_token(teardown_delete_test):
     allure.attach(str(response_bad_id.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
@@ -144,8 +136,6 @@ def test_delete_post_with_void_id(teardown_delete_test):
     allure.attach(str(response_str_void.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
@@ -171,8 +161,6 @@ def test_delete_post_with_bad_url(teardown_delete_test):
     allure.attach(str(response.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.regression_testing
 @allure.severity("normal")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
@@ -199,10 +187,6 @@ def test_delete_post_with_bad_id():
     allure.attach(str(second_response.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.endtoend_testing
-@pytest.mark.regression_testing
-@pytest.mark.sanity_testing
 @allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("endtoend_testing")

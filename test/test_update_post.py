@@ -42,9 +42,6 @@ def setup_prerequisites():
     allure.attach(str(ID_POST), 'ID post deleted:', allure.attachment_type.TEXT)
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.smoke_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("smoke_testing")
 @allure.suite("regression_testing")
@@ -79,8 +76,6 @@ def test_update_post():
     assert_that(response_text['id']).is_instance_of(int)
 
 
-@pytest.mark.functional_testing
-@pytest.mark.regression_testing
 @allure.severity("minor")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
@@ -115,8 +110,6 @@ def test_update_post_author_field():
     assert_that(response_text['author']).is_instance_of(int)
 
 
-@pytest.mark.functional_testing
-@pytest.mark.regression_testing
 @allure.severity("minor")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
@@ -151,8 +144,6 @@ def test_update_status_post_field():
     assert_that(response_text['status']).is_not_empty()
 
 
-@pytest.mark.functional_testing
-@pytest.mark.regression_testing
 @allure.severity("normal")
 @allure.suite("functional_testing")
 @allure.suite("regression_testing")
@@ -187,8 +178,6 @@ def test_update_comment_status_post():
     assert_that(response_text['comment_status']).is_not_empty()
 
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
@@ -223,8 +212,6 @@ def test_update_post_with_invalid_id():
     assert_that(response_text['code']).is_equal_to("rest_post_invalid_id")
 
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
 @allure.severity("minor")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
@@ -259,8 +246,6 @@ def test_update_status_field_with_invalid_value():
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
 @allure.severity("minor")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
@@ -294,8 +279,6 @@ def test_update_comment_status_field_with_invalid_value():
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
 @allure.severity("minor")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
@@ -329,9 +312,6 @@ def test_update_invalid_ping_status_field():
     assert_that(response_text['code']).is_equal_to("rest_invalid_param")
 
 
-@pytest.mark.security_testing
-@pytest.mark.sanity_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("security_testing")
 @allure.suite("sanity_testing")

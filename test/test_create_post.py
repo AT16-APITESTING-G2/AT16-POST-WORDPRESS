@@ -44,9 +44,6 @@ def teardown_delete_test():
     crud_post.delete_post(URL, ID_POST)
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.smoke_testing
-@pytest.mark.regression_testing
 @allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
@@ -81,9 +78,6 @@ def test_create_post():
 
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.regression_testing
-@pytest.mark.sanity_testing
 @allure.severity("critical")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
@@ -118,8 +112,6 @@ def test_create_post_with_a_valid_id():
     crud_post.delete_post(url, id_post)
 
 
-@pytest.mark.acceptance_testing
-@pytest.mark.regression_testing
 @allure.severity("trivial")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
@@ -149,8 +141,6 @@ def test_create_post_with_a_publish_status():
     crud_post.delete_post(url, id_post)
 
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
 @allure.severity("minor")
 @allure.suite("acceptance_testing")
 @allure.suite("regression_testing")
@@ -182,8 +172,6 @@ def test_create_post_with_standard_format_by_default():
     crud_post.delete_post(url, id_post)
 
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
 @allure.severity("minor")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
@@ -210,8 +198,6 @@ def test_create_post_with_void_title():
     assert_that(api.response.status_code).is_equal_to(http.HTTPStatus.BAD_REQUEST)
     allure.attach(str(api.response.status_code), 'Status code return', allure.attachment_type.TEXT)
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
 @pytest.mark.sanity_testing
 @allure.severity("critical")
 @allure.suite("negative_testing")
@@ -246,9 +232,6 @@ def test_create_post_with_void_status():
     assert_that(response_text['data']['details']['status']['data']).is_equal_to(None)
     allure.attach(str(response_text['data']['details']['status']['data']), 'Null status', allure.attachment_type.TEXT)
 
-@pytest.mark.negative_testing
-@pytest.mark.regression_testing
-@pytest.mark.sanity_testing
 @allure.severity("critical")
 @allure.suite("negative_testing")
 @allure.suite("regression_testing")
@@ -284,9 +267,7 @@ def test_create_post_with_invalid_author_id():
     assert_that(response_text['message']).is_equal_to('Invalid author ID.')
     allure.attach(str(response_text['message']), 'Message to invalid author', allure.attachment_type.TEXT)
 
-@pytest.mark.security_testing
-@pytest.mark.sanity_testing
-@pytest.mark.regression_testing
+
 @allure.severity("critical")
 @allure.suite("security_testing")
 @allure.suite("sanity_testing")
