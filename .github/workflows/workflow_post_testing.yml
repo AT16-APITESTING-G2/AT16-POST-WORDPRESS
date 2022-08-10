@@ -11,6 +11,7 @@ on:
           - Regression Test
           - Smoke Test
           - Acceptance Test
+          - Negative Test
 
   push:
     branches:
