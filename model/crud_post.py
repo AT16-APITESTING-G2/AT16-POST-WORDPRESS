@@ -11,7 +11,7 @@
 # with Jalasoft.
 #
 
-from utils.api_request import APIRequest
+from core.api_request import APIRequest
 
 
 class CrudPost:

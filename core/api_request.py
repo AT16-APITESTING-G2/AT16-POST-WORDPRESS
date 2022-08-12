@@ -43,27 +43,8 @@ class Api:
 
 class APIRequest:
 
-    def get(self, url, headers, params):
-        request = requests.Request(method="GET", url=url, headers=headers, params=params)
-        request_prepared = request.prepare()
-
-        request_api = self.get_requests(request_prepared)
-        response = requests.Session().send(request_prepared)
-        response_api = self.__get_responses(response)
-        return self.__get_apis(request_api, response_api)
-
-    def post(self, url, payload, headers, params):
-        request = requests.Request(method="POST", url=url, data=payload,
-                                   headers=headers, params=params)
-        request_prepared = request.prepare()
-
-        request_api = self.get_requests(request_prepared)
-        response = requests.Session().send(request_prepared)
-        response_api = self.__get_responses(response)
-        return self.__get_apis(request_api, response_api)
-
-    def delete(self, url, headers, params):
-        request = requests.Request(method="DELETE", url=url, headers=headers, params=params)
+    def request(self, url, headers, params, method):
+        request = requests.Request(method=method, url=url, headers=headers, params=params)
         request_prepared = request.prepare()
 
         request_api = self.get_requests(request_prepared)
@@ -82,7 +63,6 @@ class APIRequest:
         headers_response = response.headers
         return ResponseApi(status_code, text_response, as_dict_response,
                                    headers_response, url_response)
-
 
     def get_requests(self, request_prepared):
 
