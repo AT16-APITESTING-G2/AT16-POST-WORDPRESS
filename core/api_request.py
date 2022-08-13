@@ -43,8 +43,8 @@ class Api:
 
 class APIRequest:
 
-    def request(self, url, headers, params, method):
-        request = requests.Request(method=method, url=url, headers=headers, params=params)
+    def request(self, method, url, headers, params, payload={}):
+        request = requests.Request(method=method, url=url, headers=headers, params=params, data=payload)
         request_prepared = request.prepare()
 
         request_api = self.get_requests(request_prepared)

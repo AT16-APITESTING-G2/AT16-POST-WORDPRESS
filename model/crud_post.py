@@ -26,13 +26,13 @@ class CrudPost:
 
     def create_post(self, url, payload):
 
-        response = APIRequest().post(url, payload, self.headers, self.params)
+        response = APIRequest().request("POST", url, self.headers, self.params, payload)
         return response
 
     def delete_post(self, URL, id_post):
         url = "{}/{}".format(URL, id_post)
 
-        response = APIRequest().delete(url, self.headers, self.params)
+        response = APIRequest().request("DELETE", url, self.headers, self.params)
 
         return response
 
@@ -40,10 +40,10 @@ class CrudPost:
 
         new_url = "{}/{}".format(url, id_post)
 
-        response = APIRequest().get(new_url, self.headers, self.params)
+        response = APIRequest().request("GET", new_url, self.headers, self.params)
         return response
 
     def update_post(self, url, id, payload):
         new_url = "{}/{}".format(url, id)
-        response = APIRequest().post(new_url, payload, self.headers, self.params)
+        response = APIRequest().request("POST", new_url, self.headers, self.params, payload)
         return response
