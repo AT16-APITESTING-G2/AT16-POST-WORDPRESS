@@ -1,0 +1,1 @@
+[33mWARNING [0m root:test_update_post.py:70 Verify the response is 200 when a post is update succesfully

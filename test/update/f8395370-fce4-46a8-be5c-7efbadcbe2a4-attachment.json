@@ -1,0 +1,5 @@
+{
+    "Url": "http://localhost/test_api/wp-json/wp/v2/posts/1436?mo_rest_api_test_config=jwt_auth",
+    "Method": "POST",
+    "Authorization": "Bearer abc12345"
+}

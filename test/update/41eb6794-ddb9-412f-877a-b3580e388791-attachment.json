@@ -1,0 +1,6 @@
+{
+    "status": "error",
+    "error": "SEGMENT_FAULT",
+    "code": "401",
+    "error_description": "Incorrect JWT Format."
+}

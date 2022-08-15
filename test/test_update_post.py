@@ -14,6 +14,7 @@
 import json
 import allure
 import pytest
+import logging
 from http import HTTPStatus
 from assertpy.assertpy import assert_that
 from model.crud_post import CrudPost
@@ -65,6 +66,8 @@ def test_update_post():
         "Method": str(api.request.method),
         "Authorization": str(api.request.headers['Authorization'])
     }
+    logging.basicConfig(level=logging.DEBUG)
+    logging.warning("Verify the response is 200 when a post is update succesfully")
     allure.attach(json.dumps(headers, indent=4), 'Headers:', allure.attachment_type.JSON)
     allure.attach(json.dumps(payload, indent=4), 'Payload:', allure.attachment_type.JSON)
     response_text = json.loads(api.response.text)

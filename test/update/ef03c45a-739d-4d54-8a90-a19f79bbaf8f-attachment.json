@@ -1,0 +1,17 @@
+{
+    "code": "rest_invalid_param",
+    "message": "Invalid parameter(s): ping_status",
+    "data": {
+        "status": 400,
+        "params": {
+            "ping_status": "ping_status is not one of open and closed."
+        },
+        "details": {
+            "ping_status": {
+                "code": "rest_not_in_enum",
+                "message": "ping_status is not one of open and closed.",
+                "data": null
+            }
+        }
+    }
+}

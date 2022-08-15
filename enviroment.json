@@ -1,0 +1,15 @@
+{
+  "environment":"develop",
+  "loglevel":"DEBUG",
+  "browser":"CHROME",
+  "browser options":{
+    "headless":false
+  },
+  "remote config":{
+    "remote_browser":"CHROME",
+    "remote_ip":"10.28.108.180",
+    "remote_port":"4444"
+  },
+  "implicit_wait":10,
+  "explicit wait":50
+}
