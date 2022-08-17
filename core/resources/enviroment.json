@@ -1,0 +1,58 @@
+{
+    "headers":"application/json",
+    "test":{
+         "api-url":"https://api.trello.com/1",
+         "ui-url":"https://trello.com/",
+         "users":{
+               "admin":{
+                    "key":"key here",
+                    "token":"token",
+                    "username":"someone@somewhere.org",
+                    "password":"some pass"
+            },
+               "guest":{
+                    "key":"key here",
+                    "token":"token",
+                    "username":"someone@somewhere.org",
+                    "password":"some pass"
+            }
+        }
+    },
+    "develop":{
+         "api-url":"https://api.trello.com/1",
+         "ui-url":"https://trello.com/",
+         "users":{
+               "admin":{
+                    "key":"key here",
+                    "token":"token",
+                    "username":"someone@somewhere.org",
+                    "password":"some pass"
+            },
+               "guest":{
+                    "key":"key here",
+                    "token":"token",
+                    "username":"someone@somewhere.org",
+                    "password":"some pass"
+            }
+        }
+    },
+    "staging":{
+         "api-url":"https://api.trello.com/1",
+         "ui-url":"https://trello.com/",
+         "users":{
+               "admin":{
+                    "key":"key here",
+                    "token":"token",
+                    "username":"someone@somewhere.org",
+                    "password":"some pass"
+            },
+               "guest":{
+                    "key":"key here",
+                    "token":"token",
+                    "username":"someone@somewhere.org",
+                    "password":"some pass"
+            }
+        }
+    }
+}
+    
