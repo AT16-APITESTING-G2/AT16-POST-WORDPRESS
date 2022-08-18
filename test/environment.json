@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "content-type": "application/json",
+    "X-TrackerToken": "72a111e15c9b787d649c8ab5ce3895b4"
+  },
+
+  "test": {
+    "api-url": "https://www.pivotaltracker.com/services/v5/",
+    "ui-url": "https://www.pivotaltracker.com/",
+    "users" : {
+      "admin": {
+        "username": "website",
+        "password": "#Website2022"
+      }
+    }
+  }
+}

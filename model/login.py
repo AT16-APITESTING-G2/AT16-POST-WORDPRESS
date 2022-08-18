@@ -13,32 +13,29 @@
 
 import requests
 from decouple import config
-
-
+from core.request_manager import RequestsManager
+from core.utils.api_constants import HttpMethods
+from model.utils.word_press_constants import ConfigurationRoute
 class Login:
 
-    def login(self, url, user, password):
-        _url = url
-        headers = {}
-        params = {
-            "mo_rest_api_test_config": "jwt_auth"
-        }
-        payload = {
+    def login(self, user, password):
+        data = {
             'username': user,
             'password': password
         }
 
-        response = requests.post(url, data=payload, headers=headers, params=params)
-
-        return response
+        return RequestsManager.get_instance().send_request(
+            HttpMethods.POST.value,
+            ConfigurationRoute.TOKEN.value,
+            data
+        )
 
     def get_token(self):
 
-        URI_TOKEN = config('URI_TOKEN')
         USER_NAME = config('USER_NAME')
         PASSWORD = config('PASSWORD')
 
-        response_login = self.login(URI_TOKEN, USER_NAME, PASSWORD).json()
+        response_login = self.login(USER_NAME, PASSWORD).json()
 
         TOKEN = response_login['token_type'] + ' ' + response_login['jwt_token']
 
